@@ -1,5 +1,6 @@
 import pygame
-from momo_game.Neta.greenGrocerGame import GreenGrocerGame
+from Neta.greenGrocerGame import GreenGrocerGame
+from Naama.ChaseGame import ChaseGame
 
 
 
@@ -14,7 +15,7 @@ class Game():
         '''create a new game object'''
         self.__screen = screen
         self.__minigame_list = list()
-        self.__minigame_list.append(GreenGrocerGame(self))
+        self.__minigame_list.append(ChaseGame(self))
         self.__current_minigame_loop = self.__minigame_list[0].get_loop()
         self.__current_minigame_number = 0
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
