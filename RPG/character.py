@@ -1,13 +1,22 @@
 import pygame 
+from pygame.transform import scale
 
 class Character:
-    def __init__(self, location , room, image, screen_width, screen_height):
-        self.location = 0
+    def __init__(self, room, image, 
+        screen_width, screen_height, 
+        height_ratio, # Character Height / Screen Height
+            initial_locaiton = 0):
+        self.location = initial_locaiton
         self.room = room
-        self.image = pygame.image.load(image)
-        self.width, self.height = self.image.get_size()
+        image = pygame.image.load(image)
+        width, height = image.get_size()
         self.screen_width = screen_width
         self.screen_height = screen_height
+        self.height = self.screen_height * height_ratio 
+        self.width = width/height *self.height
+        self.image = scale(image, [int(self.width), int(self.height)])
+
+
 
     def step_right(self):
         if self.location < 1:
@@ -27,6 +36,3 @@ class Character:
         screen.blit(self.image, self.get_position())
 
 
-from RPG.path import street
-from os import path
-momo = Character(0, street, path.abspath("./RPG/momo.png"), 1024,768)

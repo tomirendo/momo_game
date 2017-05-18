@@ -13,8 +13,8 @@ else:
 
 class Game():
 
-    SCREEN_WIDTH = 640
-    SCREEN_HEIGHT = 480
+    SCREEN_WIDTH = 800
+    SCREEN_HEIGHT = 600
 
     ''' the main class for the Momo game'''
 
@@ -60,6 +60,7 @@ class Game():
 if __name__ == "__main__":
     pygame.init()
     pygame.mixer.init()
+    pygame.font.init()
     clock = pygame.time.Clock()
     done = False
     screen = pygame.display.set_mode((Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT))
