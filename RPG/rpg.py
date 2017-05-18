@@ -7,14 +7,15 @@ from RPG.path import street, theater
 from RPG.theater import TheaterBoard
 from RPG.dialog import Dialog
 from RPG.board import Board
+from RPG.street import StreetBoard
 from os import path
 from json import loads
 
 class RPG_minigame:
     def __init__(self, game):
         self.game = game
-        self.street = Board(game, self, "./RPG/street.json", street) 
-        self.theater = TheaterBoard(game, self, "./RPG/theater.json", theater)
+        self.street = StreetBoard(game, self, "./RPG/street.json", street) 
+        # self.theater = TheaterBoard(game, self, "./RPG/theater.json", theater)
         self.board = self.street #self.theater
         self.screen = game.get_screen()
         self.screen_width = game.SCREEN_WIDTH
@@ -43,6 +44,12 @@ class RPG_minigame:
             self.screen.fill((0,0,0))
             self.board.draw()
             pygame.display.flip()
+            if self.board.is_done():
+                next_board = self.board.next_board()
+                if next_board is not None:
+                    self.board = next_board
+                else :
+                    return False
 
             return True
         return loop
