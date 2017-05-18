@@ -14,11 +14,11 @@ elif argv[-1] == "neta":
     from momo_game.Neta.greenGrocerGame import GreenGrocerGame
     minigame = GreenGrocerGame
 elif argv[-1] == "avi":
-    from momo_game.AVi.coloredBoxes import *
+    from AVi.coloredBoxes import *
     from AVi.coloredBoxes import *
     minigame = coloredGame
 else:
-    from Naama.ChaseGame import ChaseGame
+    from momo_game.Naama.ChaseGame import ChaseGame
     minigame = ChaseGame
 
 class Game():
