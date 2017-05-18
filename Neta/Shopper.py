@@ -3,25 +3,28 @@ import random
 import os
 import json
 
+json_file_path = os.path.abspath("Neta/Shopper1.json")
+json_file = open(json_file_path)
+json_str = json_file.read()
+shopper_dictionary = json.loads(json_str)
+
+
+DIALOGUE = 'Dialog'
+ORDER = 'order'
 class Shopper():
     '''a shopper at the store'''
 
     HEIGHT = 200
     WIDTH = 60
+    SHOPPER_NUMBER = 1
 
-    def __init__(self,name,shopping_list,dialogue):
+    def __init__(self):
         '''create a new shopper'''
-        self.__name = name
-        self.__shopping_list = shopping_list
+        self.__shopping_list = shopper_dictionary["shopper"+str(Shopper.SHOPPER_NUMBER)][ORDER]
         path = os.path.abspath('Neta/Human.jpg')
         self.__image = pygame.image.load(path)
-
-        json_file_path = os.path.abspath(dialogue)
-        json_file = open(json_file_path)
-        json_str = json_file.read()
-        self.__dialogue = json.loads(json_str)
-
-
+        self.__dialogue = shopper_dictionary["shopper"+str(Shopper.SHOPPER_NUMBER)][DIALOGUE]
+        Shopper.SHOPPER_NUMBER += 1
 
 
 
@@ -37,6 +40,10 @@ class Shopper():
 
     def get_dialogue(self):
         '''get the shopper's dialogue'''
+        current_dialog = self.__dialogue
+        while current_dialog['answers'][0]['next_dialog'] is not None:
+            current_dialog = current_dialog['answers'][0]['next_dialog']
+        current_dialog['text'] += "I'd like " + str(self.__shopping_list['tomatoes']) + " tomatoes, " + str(self.__shopping_list['carrots']) + " carrots and " + str(self.__shopping_list['cucumbers']) + " cucumbers, please."
         return self.__dialogue
 
 
