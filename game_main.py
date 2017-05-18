@@ -1,19 +1,31 @@
+#!/usr/local/bin/python3.5
 import pygame
+from sys import argv
 
+if argv[-1] == "yotam":
+    from RPG.rpg import RPG_minigame as minigame
+elif argv[-1] == "neta":
+    from Neta.greenGrocerGame import GreenGrocerGame
+    minigame = GreenGrocerGame
+else:
+    from Naama.ChaseGame import ChaseGame
+    minigame = ChaseGame
 
 class Game():
 
-    SCREEN_WIDTH = 1024
-    SCREEN_HEIGHT = 768
-
     ''' the main class for the Momo game'''
+
+    SCREEN_WIDTH = 640
+    SCREEN_HEIGHT = 480
+
 
     def __init__(self,screen):
         '''create a new game object'''
+        self.__screen = screen
         self.__minigame_list = list()
+        self.__minigame_list.append(minigame(self))
         self.__current_minigame_loop = self.__minigame_list[0].get_loop()
         self.__current_minigame_number = 0
-        self.__screen = screen
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
 
 
