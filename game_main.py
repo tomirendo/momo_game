@@ -7,6 +7,9 @@ if argv[-1] == "yotam":
 elif argv[-1] == "neta":
     from momo_game.Neta.greenGrocerGame import GreenGrocerGame
     minigame = GreenGrocerGame
+elif argv[-1] == "avi":
+    from momo_game.Avi.coloredBoxes import coloredBoxes
+    minigame = coloredBoxes
 else:
     from momo_game.Naama.ChaseGame import ChaseGame
     minigame = ChaseGame
