@@ -46,7 +46,8 @@ class GreenGrocerGame():
         self.__current_mission = None
         self.__can_move = True
         self.__first_shopper_position = self.__game.SCREEN_WIDTH - 220
-        self.__speech_bubble = {TEXT: None, POSITION: None}
+        self.create_shoppers()
+        self.__shopping_list = {TOMATOES: 0, CUCUMBERS : 0, CARROTS: 0}
 
 
 
@@ -90,8 +91,10 @@ class GreenGrocerGame():
             if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 0:
                 self.__grocer[POSITION] = (self.__grocer[POSITION][0] - GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
 
-            if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__game.SCREEN_WIDTH - self.__grocer[WIDTH]:
+            if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__first_shopper_position - self.__grocer[WIDTH] - 20:
                 self.__grocer[POSITION] = (self.__grocer[POSITION][0] + GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
+                if self.__grocer[POSITION] == self.__first_shopper_position - self.__grocer[WIDTH] - 20:
+                    self.start_basket()
 
         if pressed_keys[pygame.K_DOWN]:
             for vegetable in self.__stalls:
@@ -102,6 +105,11 @@ class GreenGrocerGame():
                         self.__last_vegetable_added = time.time()
 
 
+
+    def start_basket(self):
+        '''start a new basket that you need to fill'''
+        self.__shopping_list = self.__shoppers[0].get_shopping_list()
+        self.__can_move = False
 
 
     def draw_vegetables(self):
@@ -118,6 +126,7 @@ class GreenGrocerGame():
         self.check_keys()
         self.__screen.blit(self.__grocer[IMAGE],self.__grocer[POSITION])
         self.draw_vegetables()
+        self.draw_shoppers()
         return True
 
 
@@ -133,8 +142,19 @@ class GreenGrocerGame():
         return self.main_loop
 
 
+    def draw_shoppers(self):
+        '''draw the line of shoppers'''
+        current_x = self.__first_shopper_position
+        for shopper in self.__shoppers:
+            self.__screen.blit(shopper.get_image(), (current_x, self.__game.SCREEN_HEIGHT - 40 - shopper.HEIGHT))
+            current_x += shopper.WIDTH + 20
+
     def create_shoppers(self):
         '''create the shoppers'''
         self.__shoppers = list()
-        self.__shoppers.append(Shopper('Mike',[(GROCER, "Hi"), (SHOPPER, "I would like 3 tomatoes")]))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 4, CARROTS: 3, CUCUMBERS : 1}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 1, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 0}))
 
