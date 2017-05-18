@@ -5,10 +5,11 @@ from momo_game.Neta.greenGrocerGame import GreenGrocerGame
 
 class Game():
 
+    ''' the main class for the Momo game'''
+
     SCREEN_WIDTH = 640
     SCREEN_HEIGHT = 480
 
-    ''' the main class for the Momo game'''
 
     def __init__(self,screen):
         '''create a new game object'''
