@@ -8,10 +8,13 @@ WIDTH = 'width'
 #vegetable constants:
 TOMATOES = 'tomatoes'
 TOMATO_POSITION = (14,118)
+TOMATO_IMAGE = 'tomato.png'
 CARROTS = 'carrots'
 CARROT_POSITION = (119,198)
+CARROT_IMAGE = 'carrot.png'
 CUCUMBERS = 'cucumbers'
 CUCUMBER_POSITION = (199,330)
+CUCUMBER_IMAGE = "cucumber.png"
 
 
 class GreenGrocerGame():
@@ -42,12 +45,24 @@ class GreenGrocerGame():
     def initiate_stalls(self):
         '''initiate the stalls'''
         self.__stalls = {}
-        self.__stalls['TOMATOES'] = {}
+        self.__stalls[TOMATOES] = {}
+        self.__stalls[TOMATOES][POSITION] = TOMATO_POSITION
+        self.__stalls[TOMATOES][IMAGE] = TOMATO_IMAGE
+
+        self.__stalls[CARROTS] = {}
+        self.__stalls[CARROTS][POSITION] = CARROT_POSITION
+        self.__stalls[CARROTS][IMAGE] = CARROT_IMAGE
+
+        self.__stalls[CUCUMBERS] = {}
+        self.__stalls[CUCUMBERS][POSITION] = CUCUMBER_POSITION
+        self.__stalls[CUCUMBERS][IMAGE] = CUCUMBER_IMAGE
+
+
 
 
     def get_vegetables(self):
         '''add_vegetables to the basket'''
-        
+
 
 
     def move_grocer(self):
