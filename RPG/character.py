@@ -1,6 +1,7 @@
 import pygame 
 from pygame.transform import scale
 from RPG.dialog import Dialog
+from json import loads
 
 class Character:
     def __init__(self, room, image, 
@@ -48,12 +49,13 @@ class StaticCharacter:
         self.y = position[1]*screen_height
         self.init_image(image, screen_width, screen_height, height_ratio)
         if dialog_file:
-            self.dialog = Dialog(dialog_file)
+            with open(dialog_file) as f:
+                self.dialog = Dialog(loads(f.read()))
         else :
             self.dialog = None
         self.run_dialog = False
 
-    def begin_dialog():
+    def begin_dialog(self):
         if self.dialog:
             self.run_dialog = True
 
@@ -75,6 +77,7 @@ class StaticCharacter:
     def is_dialog_done(self):
         if self.dialog:
             return self.dialog.done
+        return False
 
 
 
