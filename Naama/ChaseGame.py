@@ -1,5 +1,6 @@
 
-import pygame
+import pygame, imageio
+from moviepy.editor import VideoFileClip
 from pygame.locals import *
 from Runner import Runner
 from Chaser import Chaser
@@ -12,6 +13,8 @@ class ChaseGame:
     MAX_SCORE = 30
 
     def __innit__(self, game):
+        clip = VideoFileClip('Naama/momo-skate.mp4')
+        clip.preview()
         self.game = game
         self.screen = game.get_screen()
         self.screen_width = game.SCREEN_WIDTH

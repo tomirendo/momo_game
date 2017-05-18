@@ -2,6 +2,12 @@
 import pygame
 from sys import argv
 
+try: #Import modules to play video game files
+    import imageio
+    from moviepy.editor import VideoFileClip
+except:
+    pass
+
 if argv[-1] == "yotam":
     from RPG.rpg import RPG_minigame as minigame
 elif argv[-1] == "neta":
@@ -9,9 +15,10 @@ elif argv[-1] == "neta":
     minigame = GreenGrocerGame
 elif argv[-1] == "avi":
     from momo_game.AVi.coloredBoxes import *
+    from AVi.coloredBoxes import *
     minigame = coloredGame
 else:
-    from momo_game.Naama.ChaseGame import ChaseGame
+    from Naama.ChaseGame import ChaseGame
     minigame = ChaseGame
 
 class Game():
@@ -72,6 +79,12 @@ if __name__ == "__main__":
     done = False
     screen = pygame.display.set_mode((Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT))
     game = Game(screen)
+    try:  # Attempt to play intro video
+        clip = VideoFileClip('momo-intro.mp4')
+        clip.preview()
+    except:
+        pass
+
     while not done:
 
         for event in pygame.event.get():

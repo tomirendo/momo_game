@@ -1,17 +1,28 @@
 {
+  "background" : "./RPG/street.jpg",
   "momo": {
-  "height_ratio": 0.3,
+  "height_ratio": 0.4,
   "image": "./RPG/momo.png"
  },
  "additional_characters": [
   {
    "height_ratio": 0.45,
    "position": [
-    0.2,
-    0.1
+    0.3,
+    0.35
    ],
    "image": "./RPG/dark_person.png",
    "dialog_file" : "./RPG/dark_person_dialog.json"
+  },
+   {
+   "height_ratio": 0.45,
+   "position": [
+    0.8,
+    0.5
+   ],
+   "image": "./RPG/person.png",
+   "dialog_file" : "./RPG/person_dialog.json"
   }
+  
  ]
 }
