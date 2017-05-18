@@ -1,13 +1,14 @@
 import pygame
 from os.path import abspath,join
-font_path = abspath(join(".","RPG","Assistant.ttf"))
 font_path = abspath(join(".","RPG","Zapfino.ttf"))
+font_path = abspath(join(".","RPG","Assistant.ttf"))
 NON_SELECTED_ANSWER_COLOR = (255,255,255)
 SELECTED_ANSWER_COLOR = (50,130,130)
 FONT_SIZE = 15
 SPACTING_OF_ANSWERS = FONT_SIZE*2
 SPACING_FROM_BOURDER = 20
 FIRST_ANSWER_LOCATION = 0.83
+DIALOG_BOX_SIZE = 0.2
 
 class Dialog:
     def __init__(self, dialog_dictionary):
@@ -89,10 +90,10 @@ class DialogBox:
 
     def draw_background(self, screen):
         screen_width, screen_height = screen.get_size()
-        text_background = pygame.Surface((screen_width,screen_height * .2))  # the size of your rect
+        text_background = pygame.Surface((screen_width,screen_height * DIALOG_BOX_SIZE ))  # the size of your rect
         text_background.set_alpha(40)                # alpha level
         text_background.fill((255,255,255))           # this fills the entire surface
-        screen.blit(text_background, (0,.8*screen_height)) 
+        screen.blit(text_background, (0,(1-DIALOG_BOX_SIZE)*screen_height)) 
 
     def move_up(self):
         self.selected_answer = (self.selected_answer+1)%self.number_of_answers
