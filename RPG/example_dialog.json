@@ -1,0 +1,25 @@
+{
+ "text": "I like to?",
+ "answers": [
+  {
+   "answer_text": "eat",
+   "next_dialog": null
+  },
+  {
+   "answer_text": "Move it",
+   "next_dialog": {
+    "answers": [
+     {
+      "answer_text": "Yes! move it move it",
+      "next_dialog": null
+     },
+     {
+      "answer_text": "No...",
+      "next_dialog": null
+     }
+    ],
+    "text": "Move it move it?"
+   }
+  }
+ ]
+}

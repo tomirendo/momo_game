@@ -1,14 +1,13 @@
 import pygame
 from os.path import abspath,join
-font_path = abspath(join(".","RPG","Zapfino.ttf"))
 font_path = abspath(join(".","RPG","Assistant.ttf"))
+font_path = abspath(join(".","RPG","Zapfino.ttf"))
 NON_SELECTED_ANSWER_COLOR = (255,255,255)
 SELECTED_ANSWER_COLOR = (50,130,130)
 FONT_SIZE = 15
 SPACTING_OF_ANSWERS = FONT_SIZE*2
 SPACING_FROM_BOURDER = 20
 FIRST_ANSWER_LOCATION = 0.83
-
 
 class Dialog:
     def __init__(self, dialog_dictionary):

@@ -1,0 +1,17 @@
+{
+  "momo": {
+  "height_ratio": 0.3,
+  "image": "./RPG/momo.png"
+ },
+ "additional_characters": [
+  {
+   "height_ratio": 0.45,
+   "position": [
+    0.2,
+    0.1
+   ],
+   "image": "./RPG/dark_person.png",
+   "dialog_file" : "./RPG/dark_person_dialog.json",
+  }
+ ]
+}
