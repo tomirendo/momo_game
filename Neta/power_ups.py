@@ -1,7 +1,8 @@
 import pygame
 import os
 
-SIZE = 55
+HEIGHT = 55
+WIDTH = 140
 class PowerUps():
 
     def __init__(self,function,image,price,position):
@@ -33,6 +34,6 @@ class PowerUps():
 
     def hit_power_up(self,position):
         '''return true if the position is in the power up button, False otherwise'''
-        if position[0] >= self.__position[0] and position[0] <= self.__position[0] + SIZE:
-            if position[1] >= self.__position[1] and position[1] <= self.__position[1] + SIZE:
+        if position[0] >= self.__position[0] and position[0] <= self.__position[0] + WIDTH:
+            if position[1] >= self.__position[1] and position[1] <= self.__position[1] + HEIGHT:
                 return True
