@@ -1,0 +1,17 @@
+{
+  "name": "dialog_creator",
+  "homepage": "https://github.com/tomirendo/momo_game",
+  "authors": [
+    "Yotam Vaknin <tomirendo@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

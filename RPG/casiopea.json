@@ -1,0 +1,97 @@
+{
+ "answers": [
+  {
+   "next_dialog": {
+    "answers": [
+     {
+      "next_dialog": {
+       "answers": [
+        {
+         "next_dialog": {
+          "answers": [
+           {
+            "next_dialog": {
+             "answers": [
+              {
+               "next_dialog": {
+                "answers": [
+                 {
+                  "next_dialog": {
+                   "answers": [
+                    {
+                     "next_dialog": {
+                      "answers": [
+                       {
+                        "next_dialog": {
+                         "answers": [
+                          {
+                           "next_dialog": {
+                            "answers": [
+                             {
+                              "next_dialog": {
+                               "answers": [
+                                {
+                                 "next_dialog": {
+                                  "answers": [
+                                   {
+                                    "next_dialog": null,
+                                    "answer_text": "Thanks, that was nice of you."
+                                   }
+                                  ],
+                                  "text": "FAR AWAY, BEYOND TIME AND SPACE."
+                                 },
+                                 "answer_text": "And where shall I turn?"
+                                }
+                               ],
+                               "text": "BY CHOICE."
+                              },
+                              "answer_text": "How can I get to him?"
+                             }
+                            ],
+                            "text": "HA, CLEVER CHILD. WE DON\u2019T KNOW OURSELVES, BUT YOU CAN ASK THE ADMINISTRATOR OF TIME."
+                           },
+                           "answer_text": "Well, if it doesn\u2019t matter, you could tell me. After all, it will make no difference."
+                          }
+                         ],
+                         "text": "NOT THAT IT MATERS, BUT YES AND NO."
+                        },
+                        "answer_text": "But, do you know?"
+                       }
+                      ],
+                      "text": "WE DON\u2019T CARE."
+                     },
+                     "answer_text": "Yes, I can see that. But I meant \u2013 why is everybody so sad lately, rushing around all the time?"
+                    }
+                   ],
+                   "text": "THE STARTS SHINE BRIGHT."
+                  },
+                  "answer_text": "Oh, I'm so sorry. I didn't mean to disturb you. All I'd like to know is, what is going on around here?"
+                 }
+                ],
+                "text": "HAVING DINNER."
+               },
+               "answer_text": "why didn\u2019t you say so in the first place?"
+              }
+             ],
+             "text": "CASSIOPEIA."
+            },
+            "answer_text": "Oh, so you do talk! What is your name? "
+           }
+          ],
+          "text": "HM."
+         },
+         "answer_text": "Oh, so you're only an ordinary tortoise after all. What a pity, how wonderful it could have been to have someone to talk to."
+        }
+       ],
+       "text": "-"
+      },
+      "answer_text": "um, hi?"
+     }
+    ],
+    "text": "-"
+   },
+   "answer_text": "Good evening."
+  }
+ ],
+ "text": "-"
+}
