@@ -58,6 +58,7 @@ class GreenGrocerGame():
         self.__money = 0
         self._start_time = time.time()
         self.__display_day_summary = False
+        self.__doing_dialogue = False
 
 
 
@@ -99,7 +100,7 @@ class GreenGrocerGame():
         Add vegetables if needed'''
         pressed_keys = self.__game.get_keys_pressed()
 
-        if pressed_keys[pygame.K_SPACE]:
+        if pressed_keys[pygame.K_UP] and self.__display_day_summary == True:
             self.__display_day_summary = False
             self.__money = self.display_day_sum()
             self._start_time = time.time()
@@ -107,6 +108,9 @@ class GreenGrocerGame():
             self.__basket = list()
             self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
             self.__vegetables_sold = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
+
+        if pressed_keys[pygame.K_KP_ENTER] and self.__doing_dialogue:
+            self.__dialog.press_enter()
 
         if (self.__can_move):
             if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 150:
@@ -171,7 +175,9 @@ class GreenGrocerGame():
         if not self.__shoppers:
             self.create_shoppers()
         self.__shopping_list = self.__shoppers[0].get_shopping_list()
-        self.__dialog = Dialog(Shopper.get_dialogue())
+        self.__dialog = Dialog(self.__shoppers[0].get_dialogue())
+        self.__can_move = False
+        self.__doing_dialogue = True
         self.__basket_text = "Tomatoes: " + str(self.__shopping_list[TOMATOES]) + "     Cucumbers: " + str(self.__shopping_list[CUCUMBERS]) + "     Carrots: " + str(self.__shopping_list[CARROTS])
 
 
@@ -192,7 +198,7 @@ class GreenGrocerGame():
             current_time *= 4
             hours = current_time // 60 + 9
             minutes = current_time % 60
-            if (hours < 10):
+            if (hours < 17):
                 time_text = self.__font.render("Clock: " + str(hours) + ":" + str(minutes), True, (255,255,255))
                 self.__screen.blit(time_text,(10, 110))
             else:
@@ -226,6 +232,9 @@ class GreenGrocerGame():
             self.display_day_sum()
         self.display_sidebar()
         self.check_keys()
+
+        if self.__doing_dialogue:
+            self.__dialog.draw_on_screen(self.__game.get_screen())
         return True
 
 
@@ -237,7 +246,7 @@ class GreenGrocerGame():
         cucumber_price = self.__vegetables_sold[CUCUMBERS] * (CUCUMBER_PRICE - 0.2)
         carrot_price = self.__vegetables_sold[CARROTS] * (CARROT_PRICE - 0.2)
         text = ["Vegetables sold today:", str(self.__vegetables_sold[TOMATOES]) + " tomatoes" , str(self.__vegetables_sold[CARROTS]) + " carrots", str(self.__vegetables_sold[CUCUMBERS]) + " cucumbers" , "Expenses:" , "Tomatoes: " + str(tomato_price) , "Carrots: " + str(carrot_price) ,
-               "Cucumbers: " + str(cucumber_price) ," " , "Net Income today: " + str( "%.2f" % (income - tomato_price - cucumber_price - carrot_price)), " ", " ", " ", "Click on powerups to buy them", " ", " ", "Press space to begin the next day"]
+               "Cucumbers: " + str(cucumber_price) ," " , "Net Income today: " + str( "%.2f" % (income - tomato_price - cucumber_price - carrot_price)), " ", " ", " ", "Click on powerups to buy them", " ", " ", "Press up key to begin the next day"]
         for line in text:
             text_to_print = self.__font.render(line,True,(255,255,255))
             self.__screen.blit(text_to_print, (x_position, y_position))
@@ -267,9 +276,9 @@ class GreenGrocerGame():
     def create_shoppers(self):
         '''create the shoppers'''
         self.__shoppers = list()
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 1, CARROTS: 3, CUCUMBERS : 0}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 1}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 3, CARROTS: 1, CUCUMBERS : 0}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 4, CARROTS: 3, CUCUMBERS : 0}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 5, CARROTS: 3, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 1, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 1},"Neta/Shopper1.json"))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 3, CARROTS: 1, CUCUMBERS : 0},"Neta/Shopper1.json"))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 4, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 5, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
 
