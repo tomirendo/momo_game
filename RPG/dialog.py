@@ -10,11 +10,13 @@ class Dialog:
         self.myfont = pygame.font.Font(font_path, 10)
 
     def draw_on_screen(self,screen):
-        screen_width, screen_height = screen.get_size()
         self.timer += 1
+
+        screen_width, screen_height = screen.get_size()
         self.draw_background(screen)
-        label = self.myfont.render(self.text, 1, (255,255,255))
-        screen.blit(label, (5, .85*screen_height))
+        label = self.myfont.render(self.text[:self.timer], 
+            1, (255,255,255))
+        screen.blit(label, (5, .83*screen_height))
 
     def draw_background(self, screen):
         screen_width, screen_height = screen.get_size()

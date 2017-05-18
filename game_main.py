@@ -13,10 +13,16 @@ else:
 
 class Game():
 
+<<<<<<< HEAD
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 600
-
+=======
     ''' the main class for the Momo game'''
+
+    SCREEN_WIDTH = 640
+    SCREEN_HEIGHT = 480
+>>>>>>> a5479bb8f1458af247730c2cf86246e81a30c1d2
+
 
     def __init__(self,screen):
         '''create a new game object'''
