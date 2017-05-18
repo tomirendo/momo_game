@@ -17,14 +17,19 @@ class Shopper():
     HEIGHT = 200
     WIDTH = 60
     SHOPPER_NUMBER = 1
+    SHOPPER_LIST = list()
 
-    def __init__(self):
+    def __init__(self, dummy):
         '''create a new shopper'''
-        self.__shopping_list = shopper_dictionary["shopper"+str(Shopper.SHOPPER_NUMBER)][ORDER]
         path = os.path.abspath('Neta/Human.jpg')
         self.__image = pygame.image.load(path)
-        self.__dialogue = shopper_dictionary["shopper"+str(Shopper.SHOPPER_NUMBER)][DIALOGUE]
-        Shopper.SHOPPER_NUMBER += 1
+        if (not dummy):
+            self.__shopping_list = shopper_dictionary["shopper" + str(Shopper.SHOPPER_NUMBER)][ORDER]
+            self.__dialogue = shopper_dictionary["shopper"+str(Shopper.SHOPPER_NUMBER)][DIALOGUE]
+            Shopper.SHOPPER_NUMBER += 1
+        else:
+            self.__dialogue = shopper_dictionary["Dummy"]
+            self.__shopping_list = {"tomatoes" : random.randint(1,4), "carrots" : random.randint(1,4), "cucumbers" : random.randint(1,4)}
 
 
 
