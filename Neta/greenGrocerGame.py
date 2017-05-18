@@ -2,7 +2,7 @@ import pygame
 import os
 import time
 from momo_game.Neta.Shopper import Shopper
-from momo_game.RPG.dialog import Dialog
+from momo_game.RPG.dialog import Dialog, DIALOG_BOX_SIZE
 
 POSITION = 'positiom'
 IMAGE = 'image'
@@ -68,7 +68,7 @@ class GreenGrocerGame():
         self.__grocer = {}
         human_image_path = os.path.abspath('Neta/Human.jpg')
         self.__grocer[IMAGE] = pygame.image.load(human_image_path)
-        self.__grocer[POSITION] = (200,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - 40)
+        self.__grocer[POSITION] = (200,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - (self.__game.SCREEN_HEIGHT * DIALOG_BOX_SIZE))
         self.__grocer[WIDTH] = GreenGrocerGame.GROCER_IMAGE_WIDTH
         self.__grocer[HEIGHT] = GreenGrocerGame.GROCER_IMAGE_HEIGHT
 
@@ -109,7 +109,7 @@ class GreenGrocerGame():
             self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
             self.__vegetables_sold = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
 
-        if pressed_keys[pygame.K_KP_ENTER] and self.__doing_dialogue:
+        if pressed_keys[pygame.K_RETURN] and self.__doing_dialogue:
             self.__dialog.press_enter()
 
         if (self.__can_move):
@@ -270,7 +270,7 @@ class GreenGrocerGame():
         '''draw the line of shoppers'''
         current_x = self.__first_shopper_position
         for shopper in self.__shoppers:
-            self.__screen.blit(shopper.get_image(), (current_x, self.__game.SCREEN_HEIGHT - 40 - shopper.HEIGHT))
+            self.__screen.blit(shopper.get_image(), (current_x, self.__game.SCREEN_HEIGHT - shopper.HEIGHT - (self.__game.SCREEN_HEIGHT * DIALOG_BOX_SIZE)))
             current_x += shopper.WIDTH + 20
 
     def create_shoppers(self):
