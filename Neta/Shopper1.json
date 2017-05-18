@@ -1,12 +1,12 @@
 {"text" : "Hello",
 "answers": [
 {"answer_text" :" Hi, how are you doing? Your kid still pretending to be a dragon?",
-"next_dialogue" :
+"next_dialog" :
 	{"text" : "No, he's a fish now. You know how children are...", "answers": [
-	{"answer_text" : "Yes. My daughter can have pretty crazy ideas too", 
-	"next_dialogue" :
+	{"answer_text" : "Yes. My daughter can have pretty crazy ideas too",
+	"next_dialog" :
 		{"text" : "I'd like 3 tomatoes and 4 carrots, please",
-		"answer_text" : "sure"}
+		"answers" :[{"answer_text" : "Sure" , "next_dialog" : null}]}
 	}
 	]}
 }

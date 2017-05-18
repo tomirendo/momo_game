@@ -39,6 +39,10 @@ class Dialog:
         else :
             self.done = True
 
+    def get_done(self):
+        '''return True if the dialogue is done, False otherwise'''
+        return self.done
+
 class DialogBox:
     def __init__(self, text, answers = ["Press any ENTER to continue..."]):
         self.text = text
