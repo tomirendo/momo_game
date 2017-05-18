@@ -1,0 +1,18 @@
+class Game(screen):
+
+get_keys_pressed() - returns a list of all the keys that were pressed (in the way that pygame notates keys)
+
+get_screen() - return the screen object to be used (blit everything on this object :) )
+
+Game.SCREEN_WIDTH - the width of the screen (1024)
+Game.SCREEN_HEIGHT - the height of the screen (768)
+
+
+
+Things that subgame classes need to include:
+get_loop() - return a function that implements the logic that your game needs to carry out every "round" (between two clock ticks)
+			The function that you return - which is your main loop function - needs to return true as long as your minigame hasn't ended. Return false when the minigame is finished.
+			
+get_music() - return a file name (a path) for the music to play during your minigame.
+				For debugging purposes, if you don't yet have music, return null.
+	
