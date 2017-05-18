@@ -4,8 +4,13 @@ import pygame.locals
 
 from RPG.character import Character
 from RPG.path import street
-from RPG.dialog import DialogBox
+from RPG.dialog import Dialog
 from os import path
+from json import loads
+
+with open("./RPG/example_dialog.json") as f:
+    dialog_dictionary = loads(f.read())
+    print(dialog_dictionary)
 
 class RPG_minigame:
     def __init__(self, game):
@@ -25,7 +30,8 @@ class RPG_minigame:
         #     screen_height = self.screen_height,
         #     height_ratio = 0.4
         #     )
-        self.dialog = DialogBox("Test Dialog")
+        self.dialog = Dialog(dialog_dictionary)
+        #self.dialog = DialogBox("Test Dialog")
 
     def get_music(self):
         return None
@@ -44,7 +50,7 @@ class RPG_minigame:
                 self.dialog.move_down()
                 pygame.time.delay(100)
             if pressed_keys[pygame.K_RETURN]:
-                selected_answer = self.dialog.end_dialog()
+                selected_answer = self.dialog.press_enter()
          
             self.screen.fill((0,0,0))
             self.momo.draw_on_screen(self.screen)

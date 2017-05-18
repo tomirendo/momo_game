@@ -2,17 +2,45 @@ import pygame
 from os.path import abspath,join
 font_path = abspath(join(".","RPG","Zapfino.ttf"))
 font_path = abspath(join(".","RPG","Assistant.ttf"))
-SELECTED_ANSWER_COLOR = (255,255,255)
-NON_SELECTED_ANSWER_COLOR = (50,230,230)
+NON_SELECTED_ANSWER_COLOR = (255,255,255)
+SELECTED_ANSWER_COLOR = (50,130,130)
 FONT_SIZE = 15
 SPACTING_OF_ANSWERS = FONT_SIZE*2
 SPACING_FROM_BOURDER = 20
 FIRST_ANSWER_LOCATION = 0.83
 
 
+class Dialog:
+    def __init__(self, dialog_dictionary):
+        self.dict = dialog_dictionary
+        self.init_dialog()
+        self.done = False
+
+    def init_dialog(self):
+        text = self.dict['text']
+        answers = [i['answer_text'] for i in self.dict['answers']]
+        self.dialog_box = DialogBox(text, answers)
+
+    def draw_on_screen(self, screen):
+        if not self.done:
+            self.dialog_box.draw_on_screen(screen)
+
+    def move_up(self):
+        self.dialog_box.move_up()
+
+    def move_down(self):
+        self.dialog_box.move_down()
+
+    def press_enter(self):
+        selected_answer = self.dialog_box.end_dialog()
+        if self.dict['answers'][selected_answer]['next_dialog'] is not None:
+            self.dict = self.dict['answers'][selected_answer]['next_dialog']
+            self.init_dialog()
+        else :
+            self.done = True
+
 class DialogBox:
-    def __init__(self, text, answers = ["Press any ENTER to continue...",
-                        "Please press anything"]):
+    def __init__(self, text, answers = ["Press any ENTER to continue..."]):
         self.text = text
         self.timer = 0
         self.myfont = pygame.font.Font(font_path, FONT_SIZE)
