@@ -34,8 +34,8 @@ class GreenGrocerGame():
     '''The green Grocer minigame for the Momo game'''
 
     STEPSIZE = 3
-    GROCER_IMAGE_WIDTH = 50
-    GROCER_IMAGE_HEIGHT = 200
+    GROCER_IMAGE_WIDTH = 130
+    GROCER_IMAGE_HEIGHT = 300
 
 
     def __init__(self,game):
@@ -61,6 +61,7 @@ class GreenGrocerGame():
         self.__display_day_summary = False
         self.__doing_dialogue = False
         self.__last_enter = time.time()
+        self.create_powerups()
 
 
 
@@ -68,7 +69,7 @@ class GreenGrocerGame():
     def initiate_grocer(self):
         '''initiate the grocer object'''
         self.__grocer = {}
-        human_image_path = os.path.abspath('Neta/Human.jpg')
+        human_image_path = os.path.abspath('Neta/yarkan.png')
         self.__grocer[IMAGE] = pygame.image.load(human_image_path)
         self.__grocer[POSITION] = (200,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - (self.__game.SCREEN_HEIGHT * DIALOG_BOX_SIZE))
         self.__grocer[WIDTH] = GreenGrocerGame.GROCER_IMAGE_WIDTH
@@ -132,7 +133,7 @@ class GreenGrocerGame():
 
             if pressed_keys[pygame.K_DOWN]:
                 for vegetable in self.__stalls:
-                    if (self.__grocer[POSITION][0] > self.__stalls[vegetable][POSITION][0] and self.__grocer[POSITION][0] < self.__stalls[vegetable][POSITION][1] - GreenGrocerGame.GROCER_IMAGE_WIDTH):
+                    if (self.__grocer[POSITION][0] > self.__stalls[vegetable][POSITION][0] and self.__grocer[POSITION][0] < self.__stalls[vegetable][POSITION][1]):
                         if time.time() - self.__last_vegetable_added > 0.5 and len(self.__basket) <= 10:
                             self.__basket.append(vegetable)
                             self.__last_vegetable_added = time.time()
@@ -143,6 +144,8 @@ class GreenGrocerGame():
 
     def check_basket(self):
         '''check if the basket is as it should be.'''
+        print (self.__shopping_list)
+        print(self.__basket)
         vegetables_in_basket = {TOMATOES : 0, CARROTS : 0, CUCUMBERS: 0}
         for vegetable in self.__basket:
             vegetables_in_basket[vegetable] += 1
@@ -202,6 +205,8 @@ class GreenGrocerGame():
         self.__screen.blit(money_text,(10, 80))
 
         if (not self.__display_day_summary):
+            self.draw_powerups()
+
             current_time = int (time.time() - self._start_time)
             current_time *= 4
             hours = current_time // 60 + 9
@@ -217,6 +222,9 @@ class GreenGrocerGame():
 
 
 
+    def check_mouse_clicks(self):
+        '''check the mouse clicks'''
+        mouse_click,mouse_position = self.__game.get_mouse_click()
 
 
     def draw_vegetables(self):
@@ -293,11 +301,22 @@ class GreenGrocerGame():
 
     def create_powerups(self):
         '''create the game's powerups'''
+        current_y = 160
         self.__powerups = list()
-        self.__powerups.append(PowerUps(self.local_ad,'Neta/ad.jpg',210))
-        self.__powerups.append(PowerUps(self.sale,'Neta/sale.jpg',150))
-        self.__powerups.append(PowerUps(self.gray_man,'Neta/dark_person.png',0))
-        self.__powerups.append(PowerUps(self.organic,'Neta/organic.png',325))
+        self.__powerups.append(PowerUps(self.local_ad,'Neta/ad.jpg',210,(47,current_y)))
+        current_y += 65
+        self.__powerups.append(PowerUps(self.sale,'Neta/sale.jpg',150,(47,current_y)))
+        current_y += 65
+        self.__powerups.append(PowerUps(self.gray_man,'Neta/dark_person.png',0,(47,current_y)))
+        current_y += 65
+        self.__powerups.append(PowerUps(self.organic,'Neta/organic.png',325,(47,current_y)))
+
+
+    def draw_powerups(self):
+        '''draw the powerups to the screen'''
+        for powerup in self.__powerups:
+            self.__screen.blit(powerup.get_image(),powerup.get_position())
+
 
 
     ##########################
