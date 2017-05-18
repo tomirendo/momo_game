@@ -2,17 +2,14 @@
 import pygame
 import pygame.locals 
 
-from path import street
-
+from character import momo
 
 done = False 
-background = pygame.image.load("./background.jpg")
-forground = pygame.image.load("./forground.png")
-character = pygame.image.load("./character.png")
 
 x,y = 0,0
-STEP = 10
+STEP = .10
 middle = 300
+
 down = 550
 
 
@@ -26,14 +23,12 @@ if __name__ == '__main__':
                 done = True
         pressed_keys =  pygame.key.get_pressed()
 
-        if pressed_keys[pygame.K_RIGHT]: x+= STEP
-        if pressed_keys[pygame.K_LEFT]: x-= STEP
-        if pressed_keys[pygame.K_DOWN]: y-= STEP
-        if pressed_keys[pygame.K_UP]: y+= STEP
+
+        if pressed_keys[pygame.K_RIGHT]: momo.step_right()
+        if pressed_keys[pygame.K_LEFT]: momo.step_left()
      
         screen.fill((0,0,0))
-        print(street.get_position(x,y))
-        screen.blit(character, street.get_position(x, y))
+        momo.draw_on_screen(screen)
         pygame.display.flip()
 
 

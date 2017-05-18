@@ -13,23 +13,24 @@ class RoomPath:
         self.path_function = path_function 
         self.screen_width, self.screen_height = screen_width, screen_height
 
-    def get_position(self, x, y):
-        relative_point = self.path_function(x = x , y = y, 
-            width = self.screen_width, height = self.screen_height)
-        return ScreenPoint(relative_point, screen_width = self.screen_width,
+    def get_position(self, location):
+        return ScreenPoint(self.path_function(location =  location),   
+                            screen_width = self.screen_width,
                             screen_height  = self.screen_height)
 
 
 
-def depth_path(x, y, width, height):
-    x, y = x/width , y/height
-    if 0<=x<0.3:
-        return Point(x = x, y = (x*.1 + y))
+def depth_path(location):
+    x  = location
+    bound = 0.1
+    if x<0.3:
+        return Point(x = x+bound, y = (x ) + bound)
     if 0.3<=x<=0.7:
-        return Point(x = x, y = (0.03 + y))
-    if 0.7<x<=0 :
-        return Point(x = x, y = (0.03 - (x-.7)*.1 + y))
+        return Point(x = x+bound, y = (0.3) +bound)
+    if 0.7<x<=1.7 :
+        return Point(x = x+bound, y = (0.3 - (x-.4)*1)+bound)
+    return Point(0.7+bound, y = bound)
 
-    raise Exception("Invalid Location : ({},{})", x, y)
+    raise Exception("Invalid Location : ({},{})", x)
 
 street = RoomPath(depth_path)
