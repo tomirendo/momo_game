@@ -8,19 +8,24 @@ class Shopper():
     HEIGHT = 200
     WIDTH = 60
 
-    def __init__(self,name,conv):
+    def __init__(self,name,shopping_list):
         '''create a new shopper'''
         self.__name = name
-        self.__conv = conv
-        path = os.path.abspath('Neta/Human.png')
+        self.__shopping_list = shopping_list
+        path = os.path.abspath('Neta/Human.jpg')
         self.__image = pygame.image.load(path)
 
 
 
-    def get_conversation(self):
-        '''return the shopper's conversation'''
-        return self.__conv
 
+    def get_image(self):
+        '''get the shopper's image'''
+        return self.__image
+
+
+    def get_shopping_list(self):
+        '''get the shopper's shopping list'''
+        return self.__shopping_list
 
 
 
