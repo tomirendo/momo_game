@@ -1,4 +1,5 @@
-import random, sys, time, pygame
+import random, sys, time, pygame, imageio
+from moviepy.editor import VideoFileClip
 from pygame.locals import *
 
 FPS = 30
@@ -90,9 +91,10 @@ def loop():
     displayMessage(INTROMSG, (3*BUTTONSIZE/2 + 20))
    # main game loop
     while True:
-
         if score == 2:
             displayMessage('YOU WIN!!! ADVANCE! ', 1 * BUTTONSIZE)
+            clip = VideoFileClip('Avi/momo-ending.mp4')
+            clip.preview()
             return False
 
 
