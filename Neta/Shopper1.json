@@ -5,7 +5,7 @@
 	{"text" : "No, he's a fish now. You know how children are...", "answers": [
 	{"answer_text" : "Yes. My daughter can have pretty crazy ideas too",
 	"next_dialog" :
-		{"text" : "I'd like 3 tomatoes and 4 carrots, please",
+		{"text" : "ORDER",
 		"answers" :[{"answer_text" : "Sure" , "next_dialog" : null}]}
 	}
 	]}
