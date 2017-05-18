@@ -3,7 +3,7 @@ import pygame
 from sys import argv
 
 if argv[-1] == "yotam":
-    from momo_game.RPG.rpg import RPG_minigame as minigame
+    from RPG.rpg import RPG_minigame as minigame
 elif argv[-1] == "neta":
     from momo_game.Neta.greenGrocerGame import GreenGrocerGame
     minigame = GreenGrocerGame
