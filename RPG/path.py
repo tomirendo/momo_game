@@ -22,14 +22,16 @@ class RoomPath:
 
 def depth_path(location):
     x  = location
-    bound = 0.1
-    if x<0.3:
-        return Point(x = x*.8+bound, y = x + bound)
-    if 0.3<=x<=0.7:
-        return Point(x = x*.8 +bound, y = 0.3 +bound)
-    if 0.7<x :
-        return Point(x = x*.8+bound, y = (0.3 - (x-.7))+bound)
-    return Point(0.7+bound, y = bound)
+    bound = 0.05
+    steep = 0.23
+    min_area = 0.3
+    max_area = 0.7
+    if x<min_area:
+        return Point(x = x*.8+bound, y = x*steep + bound)
+    if min_area<=x<=max_area:
+        return Point(x = x*.8 +bound, y = min_area*steep +bound)
+    if max_area<x :
+        return Point(x = x*.8+bound, y = (min_area - (x-max_area))*steep+bound)
 
     raise Exception("Invalid Location : ({},{})", x)
 
