@@ -1,18 +1,28 @@
 import pygame
 import os
 import time
+from momo_game.Neta.Shopper import Shopper
 
 POSITION = 'positiom'
 IMAGE = 'image'
 WIDTH = 'width'
+HEIGHT = 'height'
+SHOPPER = 'shopper'
+GROCER = 'grocer'
+
+TALKING = 'talking'
+TEXT = 'text'
 
 #vegetable constants:
 TOMATOES = 'tomatoes'
-TOMATO_POSITION = (119,198)
+TOMATO_POSITION = (156,253)
 CARROTS = 'carrots'
-CARROT_POSITION = (14,118)
+CARROT_POSITION = (17,155)
 CUCUMBERS = 'cucumbers'
-CUCUMBER_POSITION = (199,330)
+CUCUMBER_POSITION = (254,415)
+
+speech_bubble_path = os.path.abspath('Neta/speechBubble.png')
+SPEECH_BUBBLE_IMAGE = pygame.image.load(speech_bubble_path)
 
 
 class GreenGrocerGame():
@@ -20,6 +30,7 @@ class GreenGrocerGame():
 
     STEPSIZE = 3
     GROCER_IMAGE_WIDTH = 50
+    GROCER_IMAGE_HEIGHT = 200
 
 
     def __init__(self,game):
@@ -32,6 +43,10 @@ class GreenGrocerGame():
         self.initiate_stalls()
         self.__basket = list()
         self.__last_vegetable_added = time.time()
+        self.__current_mission = None
+        self.__can_move = True
+        self.__first_shopper_position = self.__game.SCREEN_WIDTH - 220
+        self.__speech_bubble = {TEXT: None, POSITION: None}
 
 
 
@@ -41,8 +56,9 @@ class GreenGrocerGame():
         self.__grocer = {}
         human_image_path = os.path.abspath('Neta/Human.jpg')
         self.__grocer[IMAGE] = pygame.image.load(human_image_path)
-        self.__grocer[POSITION] = (50,250)
+        self.__grocer[POSITION] = (50,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - 40)
         self.__grocer[WIDTH] = GreenGrocerGame.GROCER_IMAGE_WIDTH
+        self.__grocer[HEIGHT] = GreenGrocerGame.GROCER_IMAGE_HEIGHT
 
     def initiate_stalls(self):
         '''initiate the stalls'''
@@ -70,11 +86,12 @@ class GreenGrocerGame():
         '''move the grocer according to pressed keys
         Add vegetables if needed'''
         pressed_keys = self.__game.get_keys_pressed()
-        if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 0:
-            self.__grocer[POSITION] = (self.__grocer[POSITION][0] - GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
+        if (self.__can_move):
+            if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 0:
+                self.__grocer[POSITION] = (self.__grocer[POSITION][0] - GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
 
-        if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__game.SCREEN_WIDTH - self.__grocer[WIDTH]:
-            self.__grocer[POSITION] = (self.__grocer[POSITION][0] + GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
+            if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__game.SCREEN_WIDTH - self.__grocer[WIDTH]:
+                self.__grocer[POSITION] = (self.__grocer[POSITION][0] + GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
 
         if pressed_keys[pygame.K_DOWN]:
             for vegetable in self.__stalls:
@@ -114,3 +131,10 @@ class GreenGrocerGame():
     def get_loop(self):
         '''get the game's main loop'''
         return self.main_loop
+
+
+    def create_shoppers(self):
+        '''create the shoppers'''
+        self.__shoppers = list()
+        self.__shoppers.append(Shopper('Mike',[(GROCER, "Hi"), (SHOPPER, "I would like 3 tomatoes")]))
+
