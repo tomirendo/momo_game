@@ -1,19 +1,22 @@
 import pygame
+from momo_game.Neta.greenGrocerGame import GreenGrocerGame
+
 
 
 class Game():
 
-    SCREEN_WIDTH = 1024
-    SCREEN_HEIGHT = 768
+    SCREEN_WIDTH = 640
+    SCREEN_HEIGHT = 480
 
     ''' the main class for the Momo game'''
 
     def __init__(self,screen):
         '''create a new game object'''
+        self.__screen = screen
         self.__minigame_list = list()
+        self.__minigame_list.append(GreenGrocerGame(self))
         self.__current_minigame_loop = self.__minigame_list[0].get_loop()
         self.__current_minigame_number = 0
-        self.__screen = screen
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
 
 
