@@ -15,8 +15,8 @@ class Game():
 
     ''' the main class for the Momo game'''
 
-    SCREEN_WIDTH = 640
-    SCREEN_HEIGHT = 480
+    SCREEN_WIDTH = 800
+    SCREEN_HEIGHT = 600
 
 
     def __init__(self,screen):
