@@ -24,11 +24,11 @@ def depth_path(location):
     x  = location
     bound = 0.1
     if x<0.3:
-        return Point(x = x+bound, y = (x ) + bound)
+        return Point(x = x*.8+bound, y = x + bound)
     if 0.3<=x<=0.7:
-        return Point(x = x+bound, y = (0.3) +bound)
-    if 0.7<x<=1.7 :
-        return Point(x = x+bound, y = (0.3 - (x-.4)*1)+bound)
+        return Point(x = x*.8+bound, y = 0.3 +bound)
+    if 0.7<x :
+        return Point(x = x*.8+bound, y = (0.3 - (x-.7))+bound)
     return Point(0.7+bound, y = bound)
 
     raise Exception("Invalid Location : ({},{})", x)
