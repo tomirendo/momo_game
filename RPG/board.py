@@ -4,14 +4,19 @@ from os import path
 from json import loads
 import pygame 
 from pygame.transform import scale
+from math import sqrt
+
+def distance(p1, p2):
+    return sqrt((p1[0]-p2[0])**2+(p1[1]-p2[1])**2)
 
 class Board:
-    def __init__(self, game, filename, room):
+    def __init__(self, game, owner, filename, room):
         with open(filename) as f:
             data = loads(f.read())
 
         self.room = room
         self.game = game
+        self.owner = owner
         self.screen = game.get_screen()
         self.screen_width = game.SCREEN_WIDTH
         self.screen_height = game.SCREEN_HEIGHT
@@ -46,7 +51,7 @@ class Board:
 
     def step_right(self):
         self.momo.step_right()
-        
+
     def step_left(self):
         self.momo.step_left()
 
@@ -58,15 +63,26 @@ class Board:
         if self.current_dialog:
             self.current_dialog.move_up()
 
+    def find_selected_character(self):
+        momo_middle = self.momo.middle()
+        for character in self.static_characters:
+            if distance(character.middle(), momo_middle) < (character.radius() + self.momo.radius()):
+                return character
+
     def press_enter(self):
-        selected_character = self.static_characters[0]
-        if not selected_character.is_dialog_done() and not self.in_dialog:
-            selected_character.begin_dialog()
-            self.in_dialog = True
-            self.current_dialog = selected_character.dialog
-        else :
-            self.current_dialog.press_enter()
-            self.in_dialog = selected_character.is_dialog_done()
+        selected_character = self.find_selected_character()
+
+        if selected_character is None:
+            return 
+
+        if selected_character.has_dialog():
+            if not selected_character.is_dialog_done() and not self.in_dialog:
+                selected_character.begin_dialog()
+                self.in_dialog = True
+                self.current_dialog = selected_character.dialog
+            else :
+                self.current_dialog.press_enter()
+                self.in_dialog = not selected_character.is_dialog_done()
 
 
 

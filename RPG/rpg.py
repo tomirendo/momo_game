@@ -3,20 +3,19 @@ import pygame
 import pygame.locals 
 
 from RPG.character import Character
-from RPG.path import street
+from RPG.path import street, theater
+from RPG.theater import TheaterBoard
 from RPG.dialog import Dialog
 from RPG.board import Board
 from os import path
 from json import loads
 
-with open("./RPG/example_dialog.json") as f:
-    dialog_dictionary = loads(f.read())
-    print(dialog_dictionary)
-
 class RPG_minigame:
     def __init__(self, game):
         self.game = game
-        self.board = Board(game, "./RPG/street.json", street)
+        self.street = Board(game, self, "./RPG/street.json", street) 
+        self.theater = TheaterBoard(game, self, "./RPG/theater.json", theater)
+        self.board = self.street #self.theater
         self.screen = game.get_screen()
         self.screen_width = game.SCREEN_WIDTH
         self.screen_height = game.SCREEN_HEIGHT
