@@ -2,8 +2,9 @@ import pygame
 from os.path import abspath,join
 font_path = abspath(join(".","RPG","Zapfino.ttf"))
 font_path = abspath(join(".","RPG","Assistant.ttf"))
-NON_SELECTED_ANSWER_COLOR = (255,255,255)
-SELECTED_ANSWER_COLOR = (50,130,130)
+font_path = abspath(join(".","RPG","Times.ttf"))
+NON_SELECTED_ANSWER_COLOR = (0,0,0)
+SELECTED_ANSWER_COLOR = (100, 30, 170)
 FONT_SIZE = 15
 SPACTING_OF_ANSWERS = FONT_SIZE*2
 SPACING_FROM_BOURDER = 20
@@ -87,7 +88,7 @@ class DialogBox:
             label = self.last_render
         else :
             label = self.myfont.render(self.text[:self.timer], 
-            1, (255,255,255))
+            1, (0,0,0))
             self.last_render = label
         screen.blit(label, (SPACING_FROM_BOURDER, 
                 FIRST_ANSWER_LOCATION*screen_height))
@@ -95,7 +96,7 @@ class DialogBox:
     def draw_background(self, screen):
         screen_width, screen_height = screen.get_size()
         text_background = pygame.Surface((screen_width,screen_height * DIALOG_BOX_SIZE ))  # the size of your rect
-        text_background.set_alpha(40)                # alpha level
+        text_background.set_alpha(200)                # alpha level
         text_background.fill((255,255,255))           # this fills the entire surface
         screen.blit(text_background, (0,(1-DIALOG_BOX_SIZE)*screen_height)) 
 

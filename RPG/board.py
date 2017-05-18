@@ -2,6 +2,8 @@ from json import loads
 from RPG.character import Character, StaticCharacter
 from os import path
 from json import loads
+import pygame 
+from pygame.transform import scale
 
 class Board:
     def __init__(self, game, filename, room):
@@ -15,13 +17,13 @@ class Board:
         self.screen_height = game.SCREEN_HEIGHT
         self.current_dialog = None
         self.in_dialog = False
-        
+        self.background_image = scale(pygame.image.load(data['background']), (self.screen_width, self.screen_height))
 
         self.momo = Character(room(self.screen_width, self.screen_height)
-            , path.abspath("./RPG/momo.png"), 
+            , path.abspath(data['momo']['image']), 
             screen_width = self.screen_width,
             screen_height = self.screen_height,
-            height_ratio = 0.6)
+            height_ratio = data['momo']['height_ratio'])
 
         self.static_characters = []
         for static_character in data['additional_characters']:
@@ -34,13 +36,20 @@ class Board:
                             ))
 
     def draw(self):
+        self.screen.blit(self.background_image, (0,0))
         for character in self.static_characters:
             character.draw_on_screen(self.screen)
         self.momo.draw_on_screen(self.screen)
+        if self.in_dialog:
+            self.current_dialog.draw_on_screen(self.screen)
+        
+
     def step_right(self):
         self.momo.step_right()
+        
     def step_left(self):
         self.momo.step_left()
+
     def move_down(self):
         if self.current_dialog:
             self.current_dialog.move_down()

@@ -71,8 +71,6 @@ class StaticCharacter:
 
     def draw_on_screen(self, screen):
         screen.blit(self.image, (self.x, self.y))
-        if self.run_dialog:
-            self.dialog.draw_on_screen(screen)
 
     def is_dialog_done(self):
         if self.dialog:
