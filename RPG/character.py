@@ -39,6 +39,14 @@ class Character:
     def draw_on_screen(self, screen):
         screen.blit(self.image, self.get_position())
 
+    def middle(self):
+        position = self.get_position()
+        return (position[0]+self.width/2, 
+                position[1]+self.height/2)
+
+    def radius(self):
+        return min([self.width, self.height])/3
+
 class StaticCharacter:
     def __init__(self, image, 
         screen_width, screen_height, 
@@ -59,7 +67,6 @@ class StaticCharacter:
         if self.dialog:
             self.run_dialog = True
 
-
     def init_image(self, image, screen_width, screen_height, height_ratio):
         image = pygame.image.load(image)
         width, height = image.get_size()
@@ -72,10 +79,18 @@ class StaticCharacter:
     def draw_on_screen(self, screen):
         screen.blit(self.image, (self.x, self.y))
 
+    def has_dialog(self):
+        return bool(self.dialog)
+
     def is_dialog_done(self):
-        if self.dialog:
-            return self.dialog.done
-        return False
+        return self.dialog.done
+
+    def middle(self):
+        return (self.x+self.width/2, 
+                self.y+self.height/2)
+
+    def radius(self):
+        return min([self.width, self.height])/3
 
 
 

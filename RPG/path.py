@@ -19,7 +19,6 @@ class RoomPath:
                             screen_height  = self.screen_height)
 
 
-
 def depth_path(location):
     x  = location
     bound = 0.05
@@ -35,5 +34,13 @@ def depth_path(location):
 
     raise Exception("Invalid Location : ({},{})", x)
 
+def stationary_path(fixed_position):
+    def path(location):
+        return fixed_position
+    return path
+
 def street(screen_width, screen_height):
     return RoomPath(depth_path, screen_width, screen_height)
+
+def theater(screen_width, screen_height):
+    return RoomPath(stationary_path([0.8,0.25]), screen_width, screen_height)
