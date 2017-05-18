@@ -1,14 +1,426 @@
-{"text" : "Hello",
-"answers": [
-{"answer_text" :" Hi, how are you doing? Your kid still pretending to be a dragon?",
-"next_dialog" :
-	{"text" : "No, he's a fish now. You know how children are...", "answers": [
-	{"answer_text" : "Yes. My daughter can have pretty crazy ideas too",
-	"next_dialog" :
-		{"text" : "ORDER",
-		"answers" :[{"answer_text" : "Sure" , "next_dialog" : null}]}
-	}
-	]}
+{
+"shopper1": {
+	"Dialog": {
+		"text": "Hello",
+		"answers": [
+			{
+				"answer_text": " Hi, how are you doing? Your kid still pretending to be a dragon?",
+				"next_dialog": {
+					"text": "No, he's a fish now. You know how children are...",
+					"answers": [
+						{
+							"answer_text": "Yes. My daughter can have pretty crazy ideas too",
+							"next_dialog": {
+								"text": "Anyways, ",
+								"answers": [
+									{
+										"answer_text": "Sure",
+										"next_dialog": null
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+	"order" : {"tomatoes" : 2, "carrots" : 1, "cucumbers" : 1}
+},
+
+
+	"shopper2": {
+		"Dialog" : 	{"text" : "Hi, how are you doing?",
+	"answers" : [
+		{"answer_text" : "I'm doing great. What about you?",
+		"next_dialog" :{
+			"text" : "I'm feeling much better. We can finally sleep at night now that we got rid of those wasps",
+			"answers":[
+				{"answer_text" : "I'm glad to heat that.",
+				"next_dialog" : {
+					"text" : "",
+					"answers" : [
+						{"answer_text" : "I'll get it right away",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 1, "carrots" : 2, "cucumbers" : 3}
+},
+
+
+
+
+
+
+		"shopper3": {
+		"Dialog" : 	{"text" : "Hi",
+	"answers" : [
+		{"answer_text" : "It's good to see you. Haven't seen you in a while",
+		"next_dialog" :{
+			"text" : "It's good to be back. All that climbing was a bit much for me",
+			"answers":[
+				{"answer_text" : "Well, you aren't twenty any more, are you?",
+				"next_dialog" : {
+					"text" : "",
+					"answers" : [
+						{"answer_text" : "Of course",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 0, "carrots" : 0, "cucumbers" : 6}
+},
+
+
+
+
+		"shopper4": {
+		"Dialog" : 	{"text" : "Did you hear that explosion last night?",
+	"answers" : [
+		{"answer_text" : "Yeah, I was wondering about that. What was it?",
+		"next_dialog" :{
+			"text" : "You know the tree Mr. Henkins has been trying to cut down? Well, aparently he succeeded",
+			"answers":[
+				{"answer_text" : "That's good for him, I guess",
+				"next_dialog" : {
+					"text" : "Well, not really, It fell on his roof - went all the way to the floor. Anyways, ",
+					"answers" : [
+						{"answer_text" : "Right away",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 3, "carrots" : 1, "cucumbers" : 0}
+},
+
+
+
+
+
+
+
+
+
+
+		"shopper5": {
+		"Dialog" : 	{"text" : "Hey, how are the piano lessons going?",
+	"answers" : [
+		{"answer_text" : "I have a lot of left thumbs",
+		"next_dialog" :{
+			"text" : "Well, practice makes perfect.",
+			"answers":[
+				{"answer_text" : "I guess. Are you making another carrot cake.",
+				"next_dialog" : {
+					"text" : "Yeah, come over later and I'll give you some. ",
+					"answers" : [
+						{"answer_text" : "Thanks. I'll be sure to drop by",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 0, "carrots" : 9, "cucumbers" : 0}
+},
+
+
+
+
+
+
+
+
+
+
+		"shopper6": {
+		"Dialog" : 	{"text" : "Hey, how are you?",
+	"answers" : [
+		{"answer_text" : "Fine, how about you?",
+		"next_dialog" :{
+			"text" : "Not so good. I caught the flu",
+			"answers":[
+				{"answer_text" : "That's too bad. Get well soon",
+				"next_dialog" : {
+					"text" : "Thanks. ",
+					"answers" : [
+						{"answer_text" : "I'll get it right away",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 1, "carrots" : 2, "cucumbers" : 3}
+},
+
+
+
+		"shopper7": {
+		"Dialog" : 	{"text" : "The tomatoes look good today",
+	"answers" : [
+		{"answer_text" : "Fresh from the farm. They always are",
+		"next_dialog" :{
+			"text" : "Great. You know my wife loves tomatoes",
+			"answers":[
+				{"answer_text" : "Yeah, she seems practically in love with them when she comes shopping",
+				"next_dialog" : {
+					"text" : "Tough competition for me... ",
+					"answers" : [
+						{"answer_text" : "Sure thing",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 5, "carrots" : 1, "cucumbers" : 0}
+},
+
+
+
+
+		"shopper8": {
+		"Dialog" : 	{"text" : "Have you heard about this girl, Momo?",
+	"answers" : [
+		{"answer_text" : "Everyone seems to be talking about her lately",
+		"next_dialog" :{
+			"text" : "Well, she just appeared out of nowhere, lives in the abandoned amphitheatre. A strange story",
+			"answers":[
+				{"answer_text" : "Yeah, it's quite bizzare",
+				"next_dialog" : {
+					"text" : "",
+					"answers" : [
+						{"answer_text" : "The very best for you",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 2, "carrots" : 2, "cucumbers" : 2}
+},
+
+
+
+
+		"shopper9": {
+		"Dialog" : 	{"text" : "You won't believe what happened",
+	"answers" : [
+		{"answer_text" : "What?",
+		"next_dialog" :{
+			"text" : "Our fridge broke down. Everything's spoiled.",
+			"answers":[
+				{"answer_text" : "Oh no.",
+				"next_dialog" : {
+					"text" : "Never mind.  ",
+					"answers" : [
+						{"answer_text" : "Sure",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 3, "carrots" : 2, "cucumbers" : 2}
+},
+
+
+
+
+		"shopper10": {
+		"Dialog" : 	{"text" : "Say, did you notice something odd going on lately",
+	"answers" : [
+		{"answer_text" : "What do you mean?",
+		"next_dialog" :{
+			"text" : "Just a sort of feeling that something's not right",
+			"answers":[
+				{"answer_text" : "Honestly, no.",
+				"next_dialog" : {
+					"text" : "Well, all I'm saying is keep your eyes open. ",
+					"answers" : [
+						{"answer_text" : "Of course",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 2, "carrots" : 2, "cucumbers" : 1}
+},
+
+
+
+
+
+		"shopper11": {
+		"Dialog" : 	{"text" : "You know, I met your daughter today",
+	"answers" : [
+		{"answer_text" : "Really?",
+		"next_dialog" :{
+			"text" : "Yeah, she was playing some make believe game with her friends near the schoolyard",
+			"answers":[
+				{"answer_text" : "Yeah, they like those sort of games",
+				"next_dialog" : {
+					"text" : "",
+					"answers" : [
+						{"answer_text" : "Your wish is my command",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 2, "carrots" : 1, "cucumbers" : 2}
+},
+
+
+
+
+
+		"shopper12": {
+		"Dialog" : 	{"text" : "Hey, did you hear about Jamey?",
+	"answers" : [
+		{"answer_text" : "No, what about him?",
+		"next_dialog" :{
+			"text" : "Apparently, he's moving to France, got some great job offer.",
+			"answers":[
+				{"answer_text" : "Wow, I would never have expected that of him",
+				"next_dialog" : {
+					"text" : "yeah, me neither. ",
+					"answers" : [
+						{"answer_text" : "I'll get it right away",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 2, "carrots" :0, "cucumbers" : 4}
+},
+
+
+
+
+
+		"shopper13": {
+		"Dialog" : 	{"text" : "Hi",
+	"answers" : [
+		{"answer_text" : "Hi, good to see you",
+		"next_dialog" :{
+			"text" : "How are the carrots this week?",
+			"answers":[
+				{"answer_text" : "We got fine carrots",
+				"next_dialog" : {
+					"text" : "Great. ",
+					"answers" : [
+						{"answer_text" : "Great",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 0, "carrots" : 5, "cucumbers" : 1}
+},
+
+
+
+
+		"shopper14": {
+		"Dialog" : 	{"text" : "Man, I'm really tired",
+	"answers" : [
+		{"answer_text" : "Can't sleep well?",
+		"next_dialog" :{
+			"text" : "Everyone at work started staying real late and my boss started giving me weird looks, so I thought I shold also stay",
+			"answers":[
+				{"answer_text" : "Don't wear yourself out",
+				"next_dialog" : {
+					"text" : "I'll try. ",
+					"answers" : [
+						{"answer_text" : "Of course",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 3, "carrots" : 1, "cucumbers" : 2}
+},
+
+
+
+
+		"shopper15": {
+		"Dialog" : 	{"text" : "You know, this Momo girl is something specail",
+	"answers" : [
+		{"answer_text" : "What did she do?",
+		"next_dialog" :{
+			"text" : "Samantha and I went to see her because we had a huge fight. She solved it all without even saying a word",
+			"answers":[
+				{"answer_text" : "Well, you're always having silly fights. You should work on your temper",
+				"next_dialog" : {
+					"text" : "Hey, my temper is fine! Well, sort of. ",
+					"answers" : [
+						{"answer_text" : "I'll get it right away",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 2, "carrots" : 1, "cucumbers" : 1}
+},
+
+
+		"shopper16": {
+		"Dialog" : 	{"text" : "The weather's really nice today, huh?",
+	"answers" : [
+		{"answer_text" : "Yeah, the breeze is so refreshing",
+		"next_dialog" :{
+			"text" : "I wish it were like this throughout the year",
+			"answers":[
+				{"answer_text" : "Totally",
+				"next_dialog" : {
+					"text" : "",
+					"answers" : [
+						{"answer_text" : "Your wish is my command",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 1, "carrots" : 2, "cucumbers" : 3}
+},
+
+
+
+		"shopper17": {
+		"Dialog" : 	{"text" : "I've been hearing rumors",
+	"answers" : [
+		{"answer_text" : "about what?",
+		"next_dialog" :{
+			"text" : "Don't you think that people are acting strange lately?",
+			"answers":[
+				{"answer_text" : "Well, maybe...",
+				"next_dialog" : {
+					"text" : "Anyways, ",
+					"answers" : [
+						{"answer_text" : "Sure thing",
+						"next_dialog" : null}
+					]
+				}}
+			]
+		}}
+	]},
+	"order" : {"tomatoes" : 1, "carrots" : 2, "cucumbers" : 3}
 }
-]
+
 }

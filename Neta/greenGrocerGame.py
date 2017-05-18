@@ -62,7 +62,10 @@ class GreenGrocerGame():
         self.__doing_dialogue = False
         self.__last_enter = time.time()
         self.create_powerups()
-
+        self.__message = None
+        self.__message_time = time.time()
+        self.__during_mission = False
+        self.__last_down_press = time.time()
 
 
 
@@ -126,59 +129,67 @@ class GreenGrocerGame():
 
             if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__first_shopper_position - self.__grocer[WIDTH] - 20:
                 self.__grocer[POSITION] = (self.__grocer[POSITION][0] + GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
-                if self.__grocer[POSITION][0] >= self.__first_shopper_position - self.__grocer[WIDTH] - 30:
-                    if not self.__basket:
-                        self.start_basket()
 
 
-            if pressed_keys[pygame.K_DOWN]:
+            if pressed_keys[pygame.K_DOWN] and (time.time() - self.__last_down_press > 3):
+                if self.__grocer[POSITION][0] >= 0:
+                    if (self.__during_mission):
+                        self.check_basket()
+                    else:
+                        self.__during_mission = True
+                        if not self.__basket:
+                            self.start_basket()
+
                 for vegetable in self.__stalls:
                     if (self.__grocer[POSITION][0] > self.__stalls[vegetable][POSITION][0] and self.__grocer[POSITION][0] < self.__stalls[vegetable][POSITION][1]):
-                        if time.time() - self.__last_vegetable_added > 0.5 and len(self.__basket) <= 10:
+                        if time.time() - self.__last_vegetable_added > 0.5 and len(self.__basket) <= 13:
                             self.__basket.append(vegetable)
                             self.__last_vegetable_added = time.time()
 
-                if self.__grocer[POSITION][0] >= self.__first_shopper_position - self.__grocer[WIDTH] - 30:
-                    self.check_basket()
 
+    def display_message(self):
+        '''display messages on the screen'''
+        if self.__message:
+            message = self.__font.render(self.__message, True, (255,0,0))
+            self.__screen.blit(message, (180,110))
+
+        if (time.time() - self.__message_time > 3):
+            self.__message = None
 
     def check_basket(self):
         '''check if the basket is as it should be.'''
-        print (self.__shopping_list)
-        print(self.__basket)
-        vegetables_in_basket = {TOMATOES : 0, CARROTS : 0, CUCUMBERS: 0}
-        for vegetable in self.__basket:
-            vegetables_in_basket[vegetable] += 1
+        self.__during_mission = False
+        if self.__shoppers:
+            vegetables_in_basket = {TOMATOES : 0, CARROTS : 0, CUCUMBERS: 0}
+            for vegetable in self.__basket:
+                vegetables_in_basket[vegetable] += 1
 
-        good_basket = True
-        for vegetable in self.__basket:
-            if self.__shopping_list[vegetable] != vegetables_in_basket[vegetable]:
-                good_basket = False
+            good_basket = True
+            for vegetable in self.__basket:
+                if self.__shopping_list[vegetable] != vegetables_in_basket[vegetable]:
+                    good_basket = False
 
-        if (good_basket):
-            self.get_money()
+            if (good_basket):
+                self.get_money()
+            else:
+                self.__message = "These are not the right vegetables"
+                self.__message_time = time.time()
+
+            self.__basket = list()
+            self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
+            self.__shoppers.remove(self.__shoppers[0])
         else:
-            self.bad_basket()
-
-        self.__basket = list()
-        self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
-        self.start_basket()
+            self.display_day_sum = True
 
 
     def get_money(self):
         '''get money for the shopping list'''
         if self.__basket:
             self.__money += TOMATO_PRICE * self.__shopping_list[TOMATOES] + CARROT_PRICE * self.__shopping_list[CARROTS] + CUCUMBER_PRICE * self.__shopping_list[CUCUMBERS]
-            self.__shoppers.remove(self.__shoppers[0])
             for vegetable in self.__shopping_list:
                 self.__vegetables_sold[vegetable] += self.__shopping_list[vegetable]
 
 
-
-    def bad_basket(self):
-        '''respond to a bad basket'''
-        text = self.__font.render("Wrong basket!", True, (255, 0, 0))
-        self.__screen.blit(text,(180,110))
 
 
     def start_basket(self):
@@ -208,7 +219,7 @@ class GreenGrocerGame():
             self.draw_powerups()
 
             current_time = int (time.time() - self._start_time)
-            current_time *= 4
+            current_time *= 8
             hours = current_time // 60 + 9
             minutes = current_time % 60
             if (hours < 17):
@@ -225,6 +236,16 @@ class GreenGrocerGame():
     def check_mouse_clicks(self):
         '''check the mouse clicks'''
         mouse_click,mouse_position = self.__game.get_mouse_click()
+        if (mouse_click[0]):
+            for powerup in self.__powerups:
+                if powerup.hit_power_up(mouse_position):
+                    if powerup.get_price() <= self.__money:
+                        powerup.get_function()()
+                        self.__powerups.remove(powerup)
+                        self.__money -= powerup.get_price()
+                    else:
+                        self.__message = "You don't have enough money for that"
+                        self.__message_time = time.time()
 
 
     def draw_vegetables(self):
@@ -252,7 +273,11 @@ class GreenGrocerGame():
         self.display_sidebar()
         self.check_keys()
 
+        self.check_mouse_clicks()
+        self.display_message()
+
         return True
+
 
 
     def display_day_sum(self):
@@ -293,11 +318,8 @@ class GreenGrocerGame():
     def create_shoppers(self):
         '''create the shoppers'''
         self.__shoppers = list()
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 1, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 1},"Neta/Shopper1.json"))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 3, CARROTS: 1, CUCUMBERS : 0},"Neta/Shopper1.json"))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 4, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 5, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
+        for i in range(6):
+            self.__shoppers.append(Shopper())
 
     def create_powerups(self):
         '''create the game's powerups'''
@@ -324,13 +346,13 @@ class GreenGrocerGame():
     #########################
 
     def local_ad(self):
-        pass
+        print("ad")
 
     def sale(self):
-        pass
+        print("sale")
 
     def gray_man(self):
-        pass
+        print("gray man")
 
     def organic(self):
-        pass
+        print("organic")
