@@ -39,6 +39,7 @@ class RPG_minigame:
                 pygame.time.delay(100)
             if pressed_keys[pygame.K_RETURN]:
                 selected_answer = self.board.press_enter()
+                pygame.time.delay(100)
          
             self.screen.fill((0,0,0))
             self.board.draw()
