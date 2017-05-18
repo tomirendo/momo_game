@@ -5,18 +5,17 @@ from sys import argv
 if argv[-1] == "yotam":
     from RPG.rpg import RPG_minigame as minigame
 elif argv[-1] == "neta":
-    from Neta.greenGrocerGame import GreenGrocerGame
+    from momo_game.Neta.greenGrocerGame import GreenGrocerGame
     minigame = GreenGrocerGame
 else:
-    from Naama.ChaseGame import ChaseGame
+    from momo_game.Naama.ChaseGame import ChaseGame
     minigame = ChaseGame
 
 class Game():
 
     ''' the main class for the Momo game'''
-
-    SCREEN_WIDTH = 640
-    SCREEN_HEIGHT = 480
+    SCREEN_WIDTH = 800
+    SCREEN_HEIGHT = 600
 
 
     def __init__(self,screen):
@@ -61,6 +60,7 @@ class Game():
 if __name__ == "__main__":
     pygame.init()
     pygame.mixer.init()
+    pygame.font.init()
     clock = pygame.time.Clock()
     done = False
     screen = pygame.display.set_mode((Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT))

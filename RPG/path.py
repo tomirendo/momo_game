@@ -33,4 +33,5 @@ def depth_path(location):
 
     raise Exception("Invalid Location : ({},{})", x)
 
-street = RoomPath(depth_path)
+def street(screen_width, screen_height):
+    return RoomPath(depth_path, screen_width, screen_height)
