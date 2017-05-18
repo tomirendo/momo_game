@@ -1,12 +1,13 @@
-import random, sys, time, pygame
+import random, sys, time, pygame, imageio
+from moviepy.editor import VideoFileClip
 from pygame.locals import *
 
 FPS = 30
-WINDOWWIDTH = 1024
-WINDOWHEIGHT = 768
+WINDOWWIDTH = 800
+WINDOWHEIGHT = 600
 FLASHSPEED = 500 # in milliseconds
 FLASHDELAY = 200 # in milliseconds
-BUTTONSIZE = 200
+BUTTONSIZE = 170
 BUTTONGAPSIZE = 20
 TIMEOUT = 4 # seconds before game over if no button is pushed.
 highScore = 0
@@ -29,7 +30,7 @@ DARKGRAY     = ( 40,  40,  40)
 PINK         = (255, 105, 180)
 BRIGHTPINK   = (255, 182, 193)
 ORANGE       = (255, 140, 0)
-BRIGHTORANGE = (255, 165, 0)
+BRIGHTORANGE = (255, 200, 0)
 PURPLE       = (128, 0, 128)
 BRIGHTPURPLE = (186, 85, 211)
 BROWN        = (139, 69, 19)
@@ -57,25 +58,25 @@ REPLAYRECT = pygame.Rect(6, 3, 65, 30)
 
 
 
-def main():
+
+def loop():
     global FPSCLOCK, DISPLAYSURF, BASICFONT, BEEP1, BEEP2, BEEP3, BEEP4, highScore
 
-    pygame.init()
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Simulate')
 
     #Insturction message
     BASICFONT = pygame.font.Font('freesansbold.ttf', 16)
-    infoSurf = BASICFONT.render('Match the pattern by clicking on the button', 1, DARKGRAY)
+    infoSurf = BASICFONT.render('Match the pattern. Get to 10 to advance!', 1, DARKGRAY)
     infoRect = infoSurf.get_rect()
     infoRect.topleft = (10, WINDOWHEIGHT - 25)
 
     # load the sound files
-    BEEP1 = pygame.mixer.Sound('beep1.ogg')
-    BEEP2 = pygame.mixer.Sound('beep2.ogg')
-    BEEP3 = pygame.mixer.Sound('beep3.ogg')
-    BEEP4 = pygame.mixer.Sound('beep4.ogg')#@TODO: ADD
+    BEEP1 = pygame.mixer.Sound('Avi/beep1.ogg')
+    BEEP2 = pygame.mixer.Sound('Avi/beep2.ogg')
+    BEEP3 = pygame.mixer.Sound('Avi/beep3.ogg')
+    BEEP4 = pygame.mixer.Sound('Avi/beep4.ogg')#@TODO: ADD
 
     # Initialize some variables for a new game
     pattern = [] # stores the pattern of colors
@@ -87,8 +88,16 @@ def main():
     waitingForInput = False
     replayClick = False  # replay was clicked
 
-    displayMessage(INTROMSG, (2*BUTTONSIZE + 4.8*BUTTONGAPSIZE))
-    while True: # main game loop
+    displayMessage(INTROMSG, (3*BUTTONSIZE/2 + 20))
+   # main game loop
+    while True:
+        if score == 2:
+            displayMessage('YOU WIN!!! ADVANCE! ', 1 * BUTTONSIZE)
+            clip = VideoFileClip('Avi/momo-ending.mp4')
+            clip.preview()
+            return False
+
+
         clickedButton = None # button that was clicked (set to YELLOW, RED, GREEN, or BLUE)
 
         DISPLAYSURF.fill(bgColor)
@@ -155,7 +164,7 @@ def main():
                 replayClick = True
                 waitingForInput = False
                 flashButtonAnimation(clickedButton)
-                continue
+
 
             elif clickedButton and clickedButton == pattern[currentStep]:
                 # pushed the correct button
@@ -179,14 +188,14 @@ def main():
                 waitingForInput = False
                 if score > highScore:
                     highScore = score
-                    displayMessage('NEW HIGH SCORE: ' + str(highScore) + " !!!", 3*BUTTONSIZE/2)
+                    displayMessage('NEW HIGH SCORE: ' + str(highScore) + " !!!" + "  Get 10 points to advance", 2*BUTTONSIZE + 37)
                 score = 0
                 pygame.time.wait(1000)
                 changeBackgroundAnimation()
 
 
-        pygame.display.update()
-        FPSCLOCK.tick(FPS)
+            pygame.display.update()
+            FPSCLOCK.tick(FPS)
 
 
 def terminate():
@@ -276,7 +285,7 @@ def drawButtons():
 
 def displayMessage(message, offset):
     # Insturction message
-    font = pygame.font.SysFont('impact', 70)
+    font = pygame.font.SysFont('impact', 40)
     info = font.render(message, 1, BLACK)
     infoRect = info.get_rect()
     infoRect.topleft = (WINDOWWIDTH // 2 - offset, WINDOWHEIGHT // 2 - BUTTONGAPSIZE)
@@ -369,5 +378,18 @@ def getButtonClicked(x, y):#@TODO: ADD
     return None
 
 
+class coloredGame:
+    def __init__(self, game):
+        self.game = game
+        self.screen = game.get_screen()
+        self.screen_width = game.SCREEN_WIDTH
+        self.screen_height = game.SCREEN_HEIGHT
+
+    def get_loop(self):
+        return loop
+
+    def get_music(self):
+        return None
+
 if __name__ == '__main__':
-    main()
+    loop()
