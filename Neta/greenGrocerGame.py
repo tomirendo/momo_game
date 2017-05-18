@@ -2,7 +2,8 @@ import pygame
 import os
 import time
 from momo_game.Neta.Shopper import Shopper
-from momo_game.RPG.dialog import Dialog
+from momo_game.RPG.dialog import Dialog, DIALOG_BOX_SIZE
+from momo_game.Neta.power_ups import PowerUps
 
 POSITION = 'positiom'
 IMAGE = 'image'
@@ -59,6 +60,7 @@ class GreenGrocerGame():
         self._start_time = time.time()
         self.__display_day_summary = False
         self.__doing_dialogue = False
+        self.__last_enter = time.time()
 
 
 
@@ -68,7 +70,7 @@ class GreenGrocerGame():
         self.__grocer = {}
         human_image_path = os.path.abspath('Neta/Human.jpg')
         self.__grocer[IMAGE] = pygame.image.load(human_image_path)
-        self.__grocer[POSITION] = (200,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - 40)
+        self.__grocer[POSITION] = (200,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - (self.__game.SCREEN_HEIGHT * DIALOG_BOX_SIZE))
         self.__grocer[WIDTH] = GreenGrocerGame.GROCER_IMAGE_WIDTH
         self.__grocer[HEIGHT] = GreenGrocerGame.GROCER_IMAGE_HEIGHT
 
@@ -109,8 +111,13 @@ class GreenGrocerGame():
             self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
             self.__vegetables_sold = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
 
-        if pressed_keys[pygame.K_KP_ENTER] and self.__doing_dialogue:
+        if pressed_keys[pygame.K_RETURN] and self.__doing_dialogue and (time.time() - self.__last_enter > 1):
             self.__dialog.press_enter()
+            self.__last_enter = time.time()
+            if (self.__dialog.get_done()):
+                self.__can_move = True
+                self.__basket_text = "Tomatoes: " + str(self.__shopping_list[TOMATOES]) + "     Cucumbers: " + str(
+                    self.__shopping_list[CUCUMBERS]) + "     Carrots: " + str(self.__shopping_list[CARROTS])
 
         if (self.__can_move):
             if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 150:
@@ -119,7 +126,8 @@ class GreenGrocerGame():
             if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__first_shopper_position - self.__grocer[WIDTH] - 20:
                 self.__grocer[POSITION] = (self.__grocer[POSITION][0] + GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
                 if self.__grocer[POSITION][0] >= self.__first_shopper_position - self.__grocer[WIDTH] - 30:
-                    self.start_basket()
+                    if not self.__basket:
+                        self.start_basket()
 
 
             if pressed_keys[pygame.K_DOWN]:
@@ -172,13 +180,13 @@ class GreenGrocerGame():
 
     def start_basket(self):
         '''start a new basket that you need to fill'''
-        if not self.__shoppers:
-            self.create_shoppers()
-        self.__shopping_list = self.__shoppers[0].get_shopping_list()
-        self.__dialog = Dialog(self.__shoppers[0].get_dialogue())
-        self.__can_move = False
-        self.__doing_dialogue = True
-        self.__basket_text = "Tomatoes: " + str(self.__shopping_list[TOMATOES]) + "     Cucumbers: " + str(self.__shopping_list[CUCUMBERS]) + "     Carrots: " + str(self.__shopping_list[CARROTS])
+        if self.__shoppers:
+            self.__shopping_list = self.__shoppers[0].get_shopping_list()
+            self.__dialog = Dialog(self.__shoppers[0].get_dialogue())
+            self.__can_move = False
+            self.__doing_dialogue = True
+        else:
+            self.__display_day_summary = True
 
 
     def display_basket(self):
@@ -228,13 +236,14 @@ class GreenGrocerGame():
             self.draw_vegetables()
             self.draw_shoppers()
             self.display_basket()
+
+            if self.__doing_dialogue:
+                self.__dialog.draw_on_screen(self.__game.get_screen())
         else:
             self.display_day_sum()
         self.display_sidebar()
         self.check_keys()
 
-        if self.__doing_dialogue:
-            self.__dialog.draw_on_screen(self.__game.get_screen())
         return True
 
 
@@ -270,7 +279,7 @@ class GreenGrocerGame():
         '''draw the line of shoppers'''
         current_x = self.__first_shopper_position
         for shopper in self.__shoppers:
-            self.__screen.blit(shopper.get_image(), (current_x, self.__game.SCREEN_HEIGHT - 40 - shopper.HEIGHT))
+            self.__screen.blit(shopper.get_image(), (current_x, self.__game.SCREEN_HEIGHT - shopper.HEIGHT - (self.__game.SCREEN_HEIGHT * DIALOG_BOX_SIZE)))
             current_x += shopper.WIDTH + 20
 
     def create_shoppers(self):
@@ -282,3 +291,27 @@ class GreenGrocerGame():
         self.__shoppers.append(Shopper('Mike', {TOMATOES: 4, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
         self.__shoppers.append(Shopper('Mike', {TOMATOES: 5, CARROTS: 3, CUCUMBERS : 0},"Neta/Shopper1.json"))
 
+    def create_powerups(self):
+        '''create the game's powerups'''
+        self.__powerups = list()
+        self.__powerups.append(PowerUps(self.local_ad,'Neta/ad.jpg',210))
+        self.__powerups.append(PowerUps(self.sale,'Neta/sale.jpg',150))
+        self.__powerups.append(PowerUps(self.gray_man,'Neta/dark_person.png',0))
+        self.__powerups.append(PowerUps(self.organic,'Neta/organic.png',325))
+
+
+    ##########################
+        #Power up functions
+    #########################
+
+    def local_ad(self):
+        pass
+
+    def sale(self):
+        pass
+
+    def gray_man(self):
+        pass
+
+    def organic(self):
+        pass

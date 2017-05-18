@@ -24,6 +24,7 @@ class Shopper():
 
 
 
+
     def get_image(self):
         '''get the shopper's image'''
         return self.__image
