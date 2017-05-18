@@ -1,8 +1,12 @@
 import pygame
 from Neta.greenGrocerGame import GreenGrocerGame
 from Naama.ChaseGame import ChaseGame
+from sys import argv
 
-
+if argv[-1] == "yotam":
+    from RPG.rpg import minigame
+else:
+    minigame = ChaseGame
 
 class Game():
 
@@ -15,7 +19,7 @@ class Game():
         '''create a new game object'''
         self.__screen = screen
         self.__minigame_list = list()
-        self.__minigame_list.append(ChaseGame(self))
+        self.__minigame_list.append(minigame)
         self.__current_minigame_loop = self.__minigame_list[0].get_loop()
         self.__current_minigame_number = 0
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
