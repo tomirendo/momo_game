@@ -3,7 +3,7 @@ from pygame.locals import *
 
 FPS = 30
 WINDOWWIDTH = 1024
-WINDOWHEIGHT = 500
+WINDOWHEIGHT = 768
 FLASHSPEED = 500 # in milliseconds
 FLASHDELAY = 200 # in milliseconds
 BUTTONSIZE = 200
