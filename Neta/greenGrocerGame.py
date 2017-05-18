@@ -1,5 +1,6 @@
 import pygame
 import os
+import time
 
 POSITION = 'positiom'
 IMAGE = 'image'
@@ -7,14 +8,11 @@ WIDTH = 'width'
 
 #vegetable constants:
 TOMATOES = 'tomatoes'
-TOMATO_POSITION = (14,118)
-TOMATO_IMAGE = 'tomato.png'
+TOMATO_POSITION = (119,198)
 CARROTS = 'carrots'
-CARROT_POSITION = (119,198)
-CARROT_IMAGE = 'carrot.png'
+CARROT_POSITION = (14,118)
 CUCUMBERS = 'cucumbers'
 CUCUMBER_POSITION = (199,330)
-CUCUMBER_IMAGE = "cucumber.png"
 
 
 class GreenGrocerGame():
@@ -31,6 +29,10 @@ class GreenGrocerGame():
         self.__bg_image = pygame.image.load(image_path)
         self.__screen = self.__game.get_screen()
         self.initiate_grocer()
+        self.initiate_stalls()
+        self.__basket = list()
+        self.__last_vegetable_added = time.time()
+
 
 
 
@@ -47,26 +49,26 @@ class GreenGrocerGame():
         self.__stalls = {}
         self.__stalls[TOMATOES] = {}
         self.__stalls[TOMATOES][POSITION] = TOMATO_POSITION
-        self.__stalls[TOMATOES][IMAGE] = TOMATO_IMAGE
+        path = os.path.abspath('Neta/tomato.png')
+        self.__stalls[TOMATOES][IMAGE] = pygame.image.load(path)
 
         self.__stalls[CARROTS] = {}
         self.__stalls[CARROTS][POSITION] = CARROT_POSITION
-        self.__stalls[CARROTS][IMAGE] = CARROT_IMAGE
+        path = os.path.abspath('Neta/carrot.png')
+        self.__stalls[CARROTS][IMAGE] = pygame.image.load(path)
 
         self.__stalls[CUCUMBERS] = {}
         self.__stalls[CUCUMBERS][POSITION] = CUCUMBER_POSITION
-        self.__stalls[CUCUMBERS][IMAGE] = CUCUMBER_IMAGE
+        path = os.path.abspath('Neta/cucumber.png')
+        self.__stalls[CUCUMBERS][IMAGE] = pygame.image.load(path)
 
 
 
 
-    def get_vegetables(self):
-        '''add_vegetables to the basket'''
 
-
-
-    def move_grocer(self):
-        '''move the grocer according to pressed keys'''
+    def check_keys(self):
+        '''move the grocer according to pressed keys
+        Add vegetables if needed'''
         pressed_keys = self.__game.get_keys_pressed()
         if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 0:
             self.__grocer[POSITION] = (self.__grocer[POSITION][0] - GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
@@ -74,13 +76,31 @@ class GreenGrocerGame():
         if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__game.SCREEN_WIDTH - self.__grocer[WIDTH]:
             self.__grocer[POSITION] = (self.__grocer[POSITION][0] + GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
 
+        if pressed_keys[pygame.K_DOWN]:
+            for vegetable in self.__stalls:
+                if (self.__grocer[POSITION][0] > self.__stalls[vegetable][POSITION][0] and self.__grocer[POSITION][0] < self.__stalls[vegetable][POSITION][1] - GreenGrocerGame.GROCER_IMAGE_WIDTH):
+                    if time.time() - self.__last_vegetable_added > 0.5 and len(self.__basket) <= 10:
+                        print (len(self.__basket))
+                        self.__basket.append(vegetable)
+                        self.__last_vegetable_added = time.time()
+
+
+
+
+    def draw_vegetables(self):
+        '''draw the vegetables to the screen'''
+        currentPosition = 10
+        for vegetable in self.__basket:
+            self.__screen.blit(self.__stalls[vegetable][IMAGE], (currentPosition, 5))
+            currentPosition += 55
 
 
     def main_loop(self):
         '''the main loop for the minigame'''
         self.__screen.blit(self.__bg_image,(0,60))
-        self.move_grocer()
+        self.check_keys()
         self.__screen.blit(self.__grocer[IMAGE],self.__grocer[POSITION])
+        self.draw_vegetables()
         return True
 
 
