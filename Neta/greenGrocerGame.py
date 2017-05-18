@@ -1,10 +1,15 @@
 import pygame
 import os
 import time
+from momo_game.Neta.Shopper import Shopper
 
 POSITION = 'positiom'
 IMAGE = 'image'
 WIDTH = 'width'
+HEIGHT = 'height'
+SHOPPER = 'shopper'
+GROCER = 'grocer'
+
 
 #vegetable constants:
 TOMATOES = 'tomatoes'
@@ -20,6 +25,7 @@ class GreenGrocerGame():
 
     STEPSIZE = 3
     GROCER_IMAGE_WIDTH = 50
+    GROCER_IMAGE_HEIGHT = 200
 
 
     def __init__(self,game):
@@ -43,6 +49,7 @@ class GreenGrocerGame():
         self.__grocer[IMAGE] = pygame.image.load(human_image_path)
         self.__grocer[POSITION] = (50,250)
         self.__grocer[WIDTH] = GreenGrocerGame.GROCER_IMAGE_WIDTH
+        self.__grocer[HEIGHT] = GreenGrocerGame.GROCER_IMAGE_HEIGHT
 
     def initiate_stalls(self):
         '''initiate the stalls'''
@@ -114,3 +121,10 @@ class GreenGrocerGame():
     def get_loop(self):
         '''get the game's main loop'''
         return self.main_loop
+
+
+
+    def create_shoppers(self):
+        '''create the shoppers'''
+        self.__shoppers = list()
+        self.__shoppers.append(Shopper('Mike',{SHOPPER: "I want 3 tomatoes", GROCER : "OK"}))
