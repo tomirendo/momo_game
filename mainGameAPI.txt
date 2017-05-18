@@ -4,6 +4,7 @@ get_keys_pressed() - returns a list of all the keys that were pressed (in the wa
 
 get_screen() - return the screen object to be used (blit everything on this object :) )
 
+get_mouse_click() - return the state of the mouse: A sequence of the values: MouseDown, MouseUp, MouseMotion and the mouse position
 Game.SCREEN_WIDTH - the width of the screen (1024)
 Game.SCREEN_HEIGHT - the height of the screen (768)
 
