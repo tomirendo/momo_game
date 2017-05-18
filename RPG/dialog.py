@@ -59,6 +59,7 @@ class DialogBox:
             else :
                 color = NON_SELECTED_ANSWER_COLOR
             self.rendered_answers.append(self.myfont.render(ans, 1, color))
+
     def draw_answers(self, screen):
         screen_width, screen_height = screen.get_size()
         for index, answer in enumerate(self.rendered_answers):

@@ -2,6 +2,7 @@ import pygame
 import os
 import time
 from momo_game.Neta.Shopper import Shopper
+from momo_game.RPG.dialog import Dialog
 
 POSITION = 'positiom'
 IMAGE = 'image'
@@ -170,6 +171,7 @@ class GreenGrocerGame():
         if not self.__shoppers:
             self.create_shoppers()
         self.__shopping_list = self.__shoppers[0].get_shopping_list()
+        self.__dialog = Dialog(Shopper.get_dialogue())
         self.__basket_text = "Tomatoes: " + str(self.__shopping_list[TOMATOES]) + "     Cucumbers: " + str(self.__shopping_list[CUCUMBERS]) + "     Carrots: " + str(self.__shopping_list[CARROTS])
 
 
