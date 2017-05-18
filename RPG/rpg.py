@@ -2,37 +2,33 @@
 import pygame
 import pygame.locals 
 
-from character import momo
+from RPG.character import Character
+from RPG.path import street
+from os import path
 
-done = False 
+class RPG_minigame:
+    def __init__(self, game):
+        self.game = game
+        self.screen = game.get_screen()
+        self.screen_width = game.SCREEN_WIDTH
+        self.screen_height = game.SCREEN_HEIGHT
+        self.momo = Character(0, street, path.abspath("./RPG/momo.png"), 
+            self.screen_width,
+            self.screen_height)
 
-x,y = 0,0
-STEP = .10
-middle = 300
+    def get_music(self):
+        return None
 
-down = 550
-
-
-if __name__ == '__main__':
-    pygame.init()
-    screen = pygame.display.set_mode((1024,768))
-    
-    while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
-        pressed_keys =  pygame.key.get_pressed()
-
-
-        if pressed_keys[pygame.K_RIGHT]: momo.step_right()
-        if pressed_keys[pygame.K_LEFT]: momo.step_left()
-     
-        screen.fill((0,0,0))
-        momo.draw_on_screen(screen)
-        pygame.display.flip()
+    def get_loop(self):
+        def loop():
+            pressed_keys =  pygame.key.get_pressed()
 
 
-    while pygame.event.wait().type != pygame.locals.QUIT:
-        pass
-
+            if pressed_keys[pygame.K_RIGHT]: momo.step_right()
+            if pressed_keys[pygame.K_LEFT]: momo.step_left()
+         
+            self.screen.fill((0,0,0))
+            self.momo.draw_on_screen(self.screen)
+            pygame.display.flip()
+        return loop
 

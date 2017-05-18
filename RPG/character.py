@@ -27,5 +27,6 @@ class Character:
         screen.blit(self.image, self.get_position())
 
 
-from path import street
-momo = Character(0, street, "./momo.png", 1024,768)
+from RPG.path import street
+from os import path
+momo = Character(0, street, path.abspath("./RPG/momo.png"), 1024,768)
