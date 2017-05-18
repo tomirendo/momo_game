@@ -14,12 +14,12 @@ TALKING = 'talking'
 TEXT = 'text'
 
 #vegetable constants:
-TOMATOES = 'tomatoes'
-TOMATO_POSITION = (156,253)
 CARROTS = 'carrots'
-CARROT_POSITION = (17,155)
+CARROT_POSITION = (14+150,114+150)
+TOMATOES = 'tomatoes'
+TOMATO_POSITION = (115+150,210+150)
 CUCUMBERS = 'cucumbers'
-CUCUMBER_POSITION = (254,415)
+CUCUMBER_POSITION = (211+150,331+150)
 
 speech_bubble_path = os.path.abspath('Neta/speechBubble.png')
 SPEECH_BUBBLE_IMAGE = pygame.image.load(speech_bubble_path)
@@ -48,6 +48,10 @@ class GreenGrocerGame():
         self.__first_shopper_position = self.__game.SCREEN_WIDTH - 220
         self.create_shoppers()
         self.__shopping_list = {TOMATOES: 0, CUCUMBERS : 0, CARROTS: 0}
+        self.__basket_text = None
+        self.__font  = pygame.font.SysFont("monospace", 17)
+        self.__money = 0
+        self._start_time = time.time()
 
 
 
@@ -57,9 +61,10 @@ class GreenGrocerGame():
         self.__grocer = {}
         human_image_path = os.path.abspath('Neta/Human.jpg')
         self.__grocer[IMAGE] = pygame.image.load(human_image_path)
-        self.__grocer[POSITION] = (50,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - 40)
+        self.__grocer[POSITION] = (200,self.__game.SCREEN_HEIGHT - GreenGrocerGame.GROCER_IMAGE_HEIGHT - 40)
         self.__grocer[WIDTH] = GreenGrocerGame.GROCER_IMAGE_WIDTH
         self.__grocer[HEIGHT] = GreenGrocerGame.GROCER_IMAGE_HEIGHT
+
 
     def initiate_stalls(self):
         '''initiate the stalls'''
@@ -88,28 +93,85 @@ class GreenGrocerGame():
         Add vegetables if needed'''
         pressed_keys = self.__game.get_keys_pressed()
         if (self.__can_move):
-            if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 0:
+            if pressed_keys[pygame.K_LEFT] and self.__grocer[POSITION][0] >= 150:
                 self.__grocer[POSITION] = (self.__grocer[POSITION][0] - GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
 
             if pressed_keys[pygame.K_RIGHT] and self.__grocer[POSITION][0] <= self.__first_shopper_position - self.__grocer[WIDTH] - 20:
                 self.__grocer[POSITION] = (self.__grocer[POSITION][0] + GreenGrocerGame.STEPSIZE, self.__grocer[POSITION][1])
-                if self.__grocer[POSITION] == self.__first_shopper_position - self.__grocer[WIDTH] - 20:
+                if self.__grocer[POSITION][0] >= self.__first_shopper_position - self.__grocer[WIDTH] - 30:
                     self.start_basket()
+
 
         if pressed_keys[pygame.K_DOWN]:
             for vegetable in self.__stalls:
                 if (self.__grocer[POSITION][0] > self.__stalls[vegetable][POSITION][0] and self.__grocer[POSITION][0] < self.__stalls[vegetable][POSITION][1] - GreenGrocerGame.GROCER_IMAGE_WIDTH):
                     if time.time() - self.__last_vegetable_added > 0.5 and len(self.__basket) <= 10:
-                        print (len(self.__basket))
                         self.__basket.append(vegetable)
                         self.__last_vegetable_added = time.time()
 
+            if self.__grocer[POSITION][0] >= self.__first_shopper_position - self.__grocer[WIDTH] - 30:
+                self.check_basket()
+
+
+    def check_basket(self):
+        '''check if the basket is as it should be.'''
+        vegetables_in_basket = {TOMATOES : 0, CARROTS : 0, CUCUMBERS: 0}
+        for vegetable in self.__basket:
+            vegetables_in_basket[vegetable] += 1
+
+        good_basket = True
+        for vegetable in self.__basket:
+            if self.__shopping_list[vegetable] != vegetables_in_basket[vegetable]:
+                good_basket = False
+
+        if (good_basket):
+            self.get_money()
+        else:
+            self.bad_basket()
+
+        self.__basket = list()
+        self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
+        self.start_basket()
+
+
+    def get_money(self):
+        '''get money for the shopping list'''
+        if self.__basket:
+            self.__money += 0.9 * self.__shopping_list[TOMATOES] + 1.2 * self.__shopping_list[CARROTS] + 0.5 * self.__shopping_list[CUCUMBERS]
+            self.__shoppers.remove(self.__shoppers[0])
+
+
+
+    def bad_basket(self):
+        '''respond to a bad basket'''
+        text = self.__font.render("Wrong basket!", True, (255, 0, 0))
+        self.__screen.blit(text,(180,110))
 
 
     def start_basket(self):
         '''start a new basket that you need to fill'''
         self.__shopping_list = self.__shoppers[0].get_shopping_list()
-        self.__can_move = False
+        self.__basket_text = "Tomatoes: " + str(self.__shopping_list[TOMATOES]) + "     Cucumbers: " + str(self.__shopping_list[CUCUMBERS]) + "     Carrots: " + str(self.__shopping_list[CARROTS])
+
+
+    def display_basket(self):
+        '''display the current basket'''
+        if (self.__basket_text):
+            text = self.__font.render(self.__basket_text,True,(0, 0, 139))
+            self.__screen.blit(text, (170, 80))
+
+
+    def display_sidebar(self):
+        '''display the amount of money earned'''
+        money_text = self.__font.render("Money: " + str("%.2f" % self.__money), True, (255,255,255))
+        self.__screen.blit(money_text,(10, 80))
+
+        current_time = int (time.time() - self._start_time)
+        current_time *= 4
+        hours = current_time // 60 + 9
+        minutes = current_time % 60
+        time_text = self.__font.render("Clock: " + str(hours) + ":" + str(minutes), True, (255,255,255))
+        self.__screen.blit(time_text,(10, 110))
 
 
     def draw_vegetables(self):
@@ -122,11 +184,14 @@ class GreenGrocerGame():
 
     def main_loop(self):
         '''the main loop for the minigame'''
-        self.__screen.blit(self.__bg_image,(0,60))
+        self.__screen.fill((0,0,0))
+        self.__screen.blit(self.__bg_image,(150,60))
         self.check_keys()
         self.__screen.blit(self.__grocer[IMAGE],self.__grocer[POSITION])
         self.draw_vegetables()
         self.draw_shoppers()
+        self.display_basket()
+        self.display_sidebar()
         return True
 
 
@@ -152,9 +217,9 @@ class GreenGrocerGame():
     def create_shoppers(self):
         '''create the shoppers'''
         self.__shoppers = list()
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 0}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 4, CARROTS: 3, CUCUMBERS : 1}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 1, CUCUMBERS : 0}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 0}))
-        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 1, CARROTS: 3, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 2, CARROTS: 3, CUCUMBERS : 1}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 3, CARROTS: 1, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 4, CARROTS: 3, CUCUMBERS : 0}))
+        self.__shoppers.append(Shopper('Mike', {TOMATOES: 5, CARROTS: 3, CUCUMBERS : 0}))
 
