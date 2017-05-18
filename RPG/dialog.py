@@ -8,7 +8,7 @@ FONT_SIZE = 15
 SPACTING_OF_ANSWERS = FONT_SIZE*2
 SPACING_FROM_BOURDER = 20
 FIRST_ANSWER_LOCATION = 0.83
-
+DIALOG_BOX_SIZE = 0.2
 
 class Dialog:
     def __init__(self, dialog_dictionary):
@@ -33,11 +33,15 @@ class Dialog:
 
     def press_enter(self):
         selected_answer = self.dialog_box.end_dialog()
-        if self.dict['answers'][selected_answer]['next_dialog'] is not None:
+        if self.dict['answers'][selected_answer].get('next_dialog',None) is not None:
             self.dict = self.dict['answers'][selected_answer]['next_dialog']
             self.init_dialog()
         else :
             self.done = True
+
+    def get_done(self):
+        '''return True if the dialogue is done, False otherwise'''
+        return self.done
 
 class DialogBox:
     def __init__(self, text, answers = ["Press any ENTER to continue..."]):
@@ -59,6 +63,7 @@ class DialogBox:
             else :
                 color = NON_SELECTED_ANSWER_COLOR
             self.rendered_answers.append(self.myfont.render(ans, 1, color))
+
     def draw_answers(self, screen):
         screen_width, screen_height = screen.get_size()
         for index, answer in enumerate(self.rendered_answers):
@@ -89,10 +94,10 @@ class DialogBox:
 
     def draw_background(self, screen):
         screen_width, screen_height = screen.get_size()
-        text_background = pygame.Surface((screen_width,screen_height * .2))  # the size of your rect
+        text_background = pygame.Surface((screen_width,screen_height * DIALOG_BOX_SIZE ))  # the size of your rect
         text_background.set_alpha(40)                # alpha level
         text_background.fill((255,255,255))           # this fills the entire surface
-        screen.blit(text_background, (0,.8*screen_height)) 
+        screen.blit(text_background, (0,(1-DIALOG_BOX_SIZE)*screen_height)) 
 
     def move_up(self):
         self.selected_answer = (self.selected_answer+1)%self.number_of_answers
