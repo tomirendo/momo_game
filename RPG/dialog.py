@@ -33,7 +33,7 @@ class Dialog:
 
     def press_enter(self):
         selected_answer = self.dialog_box.end_dialog()
-        if self.dict['answers'][selected_answer]['next_dialog'] is not None:
+        if self.dict['answers'][selected_answer].get('next_dialog',None) is not None:
             self.dict = self.dict['answers'][selected_answer]['next_dialog']
             self.init_dialog()
         else :
