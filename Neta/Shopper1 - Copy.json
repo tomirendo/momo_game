@@ -1,0 +1,14 @@
+{"text" : "Hello",
+"answers": [
+{"answer_text" :" Blahvjspghs;dohb;dfbdk?",
+"next_dialog" :
+	{"text" : "No, he's a fish now. You know how children are...", "answers": [
+	{"answer_text" : "Yes. My daughter can have pretty crazy ideas too",
+	"next_dialog" :
+		{"text" : "ORDER",
+		"answers" :[{"answer_text" : "Sure" , "next_dialog" : null}]}
+	}
+	]}
+}
+]
+}

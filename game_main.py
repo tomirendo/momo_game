@@ -7,6 +7,9 @@ if argv[-1] == "yotam":
 elif argv[-1] == "neta":
     from momo_game.Neta.greenGrocerGame import GreenGrocerGame
     minigame = GreenGrocerGame
+elif argv[-1] == "avi":
+    from AVi.coloredBoxes import *
+    minigame = coloredGame
 else:
     from momo_game.Naama.ChaseGame import ChaseGame
     minigame = ChaseGame
@@ -28,7 +31,11 @@ class Game():
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
 
 
-
+    def get_mouse_click(self):
+        '''return a tuple containing two elements:
+        1. a series of three boolean values : MOUSEBUTTONDOWN, MOUSEBUTTONUP, MOUSEMOTION
+        2. the position of the mouse'''
+        return (pygame.mouse.get_pressed(), pygame.mouse.get_pos())
 
     def get_keys_pressed(self):
         '''Get the list of buttons that were pressed'''

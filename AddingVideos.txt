@@ -1,0 +1,11 @@
+/////////The Required code //////////
+
+import pygame
+from moviepy.editor import VideoFileClip
+import imageio 
+# imageio.plugins.ffmpeg.download()  // If you get an error - it's because you haven't downloaded this
+
+
+pygame.display.set_caption('My video!')
+clip = VideoFileClip('momo-intro.mp4')
+clip.preview()
