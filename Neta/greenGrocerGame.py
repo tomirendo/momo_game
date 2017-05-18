@@ -17,11 +17,11 @@ TEXT = 'text'
 
 #vegetable constants:
 CARROTS = 'carrots'
-CARROT_POSITION = (14+150,114+150)
+CARROT_POSITION = (11+150,139+150)
 TOMATOES = 'tomatoes'
-TOMATO_POSITION = (115+150,210+150)
+TOMATO_POSITION = (139+150,296+150)
 CUCUMBERS = 'cucumbers'
-CUCUMBER_POSITION = (211+150,331+150)
+CUCUMBER_POSITION = (296+150,437+150)
 
 speech_bubble_path = os.path.abspath('Neta/speechBubble.png')
 SPEECH_BUBBLE_IMAGE = pygame.image.load(speech_bubble_path)
@@ -42,7 +42,7 @@ class GreenGrocerGame():
         '''Initiate the game object'''
         self.__game = game
         self.ad = False
-        image_path = os.path.abspath('Neta/temp_screen.jpg')
+        image_path = os.path.abspath('Neta/veg.png')
         self.__bg_image = pygame.image.load(image_path)
         self.__screen = self.__game.get_screen()
         self.initiate_grocer()
@@ -51,7 +51,7 @@ class GreenGrocerGame():
         self.__last_vegetable_added = time.time()
         self.__current_mission = None
         self.__can_move = True
-        self.__first_shopper_position = self.__game.SCREEN_WIDTH - 220
+        self.__first_shopper_position = self.__game.SCREEN_WIDTH - 150
         self.create_shoppers()
         self.__shopping_list = {TOMATOES: 0, CUCUMBERS : 0, CARROTS: 0}
         self.__vegetables_sold = {TOMATOES: 0, CUCUMBERS : 0, CARROTS: 0}
@@ -266,7 +266,7 @@ class GreenGrocerGame():
         '''the main loop for the minigame'''
         self.__screen.fill((0, 0, 0))
         if not (self.__display_day_summary):
-            self.__screen.blit(self.__bg_image,(150,60))
+            self.__screen.blit(self.__bg_image,(150,120))
             self.__screen.blit(self.__grocer[IMAGE],self.__grocer[POSITION])
             self.draw_vegetables()
             self.draw_shoppers()
