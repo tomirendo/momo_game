@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.5
+#!/usr/local/bin/python3.6
 import pygame
 from sys import argv
 
@@ -14,6 +14,7 @@ elif argv[-1] == "neta":
     from momo_game.Neta.greenGrocerGame import GreenGrocerGame
     minigame = GreenGrocerGame
 elif argv[-1] == "avi":
+    from momo_game.AVi.coloredBoxes import *
     from AVi.coloredBoxes import *
     minigame = coloredGame
 else:

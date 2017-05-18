@@ -1,0 +1,18 @@
+{
+  "background" : "./RPG/theater.jpg",
+  "momo": {
+  "height_ratio": 0.4,
+  "image": "./RPG/momo.png"
+ },
+ "additional_characters": [
+  {
+   "height_ratio": 0.1,
+   "position": [
+    0.3,
+    0.35
+   ],
+   "image": "./RPG/tutle2.png",
+   "dialog_file" : "./RPG/casiopea.json"
+  }
+ ]
+}

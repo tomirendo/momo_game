@@ -1,0 +1,28 @@
+{
+ "text": "...",
+ "answers": [
+  {
+   "answer_text": "Hey! Who are you?",
+   "next_dialog": {
+        "text" : "It's none of your business",
+        "answers" : [{
+          "answer_text" : "I saw you talking to people",
+          "next_dialog" : {
+            "text" : "To whom?",
+            "answers" : [{
+              "answer_text": "To the greengrocer",
+              "next_dialog" : null
+            }, 
+            {
+              "answer_text" : "To some people",
+              "next_dialog" : {
+                "text" : "I was helping them" ,
+                "answers" : [{"answer_text" : "..."}]
+              }
+            }
+            ]
+          }
+        }]
+      }
+  }]
+}
