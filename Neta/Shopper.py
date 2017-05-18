@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+import json
 
 class Shopper():
     '''a shopper at the store'''
@@ -14,7 +15,11 @@ class Shopper():
         self.__shopping_list = shopping_list
         path = os.path.abspath('Neta/Human.jpg')
         self.__image = pygame.image.load(path)
-        self.__dialogue = dialogue
+
+        json_file_path = os.path.abspath(dialogue)
+        json_file = open(json_file_path)
+        json_str = json_file.read()
+        self.__dialogue = json.loads(json_str)
 
 
 
