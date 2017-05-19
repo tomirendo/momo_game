@@ -7,7 +7,9 @@ WINDOWWIDTH = 800
 WINDOWHEIGHT = 600
 FLASHSPEED = 500 # in milliseconds
 FLASHDELAY = 200 # in milliseconds
-BUTTONSIZE = 170
+BUTTONSIZE = 170 #regular
+SMALLBUTTONSIZE = 100
+TALL_BUTTON_W = 100
 BUTTONGAPSIZE = 20
 TIMEOUT = 4 # seconds before game over if no button is pushed.
 highScore = 0
@@ -43,26 +45,30 @@ XMARGIN = int((WINDOWWIDTH - (2 * BUTTONSIZE) - BUTTONGAPSIZE) / 2)
 YMARGIN = int((WINDOWHEIGHT - (2 * BUTTONSIZE) - BUTTONGAPSIZE) / 2)
 
 # Rect objects for each of the four buttons
-YELLOWRECT = pygame.Rect(XMARGIN, YMARGIN, BUTTONSIZE, BUTTONSIZE)
-BLUERECT   = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN, BUTTONSIZE, BUTTONSIZE)
-REDRECT    = pygame.Rect(XMARGIN, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
-GREENRECT  = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
+YELLOWRECT = pygame.Rect(XMARGIN + 0.5*BUTTONSIZE + 0.5*BUTTONGAPSIZE, YMARGIN - 0.4*BUTTONSIZE, TALL_BUTTON_W, BUTTONSIZE)
+BLUERECT   = pygame.Rect(XMARGIN + BUTTONSIZE + 2*BUTTONGAPSIZE, YMARGIN + 20, TALL_BUTTON_W, BUTTONSIZE)
+REDRECT    = pygame.Rect(XMARGIN - BUTTONGAPSIZE, YMARGIN + BUTTONSIZE - 0.85*BUTTONGAPSIZE, SMALLBUTTONSIZE, SMALLBUTTONSIZE)
+GREENRECT  = pygame.Rect(XMARGIN + (3/2)*BUTTONSIZE + BUTTONGAPSIZE, YMARGIN + BUTTONSIZE + 2*BUTTONGAPSIZE, TALL_BUTTON_W, SMALLBUTTONSIZE)
 PINKRECT  = pygame.Rect(XMARGIN - BUTTONSIZE - BUTTONGAPSIZE, YMARGIN, BUTTONSIZE, BUTTONSIZE)
-ORANGERECT = pygame.Rect(XMARGIN - BUTTONSIZE - BUTTONGAPSIZE, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
-PURPLERECT = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN, BUTTONSIZE, BUTTONSIZE)
-BROWNRECT = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN + BUTTONSIZE + BUTTONGAPSIZE, BUTTONSIZE, BUTTONSIZE)
+
+ORANGERECT = pygame.Rect(XMARGIN - 0.6*BUTTONSIZE - BUTTONGAPSIZE, YMARGIN + 1.5*BUTTONSIZE + BUTTONGAPSIZE, SMALLBUTTONSIZE, SMALLBUTTONSIZE)
+ORANGERECT = pygame.Rect(XMARGIN - 0.6*BUTTONSIZE - BUTTONGAPSIZE, YMARGIN + 1.5*BUTTONSIZE + BUTTONGAPSIZE, SMALLBUTTONSIZE, SMALLBUTTONSIZE)
+PURPLERECT = pygame.Rect(XMARGIN + 2*BUTTONSIZE - 1*BUTTONGAPSIZE, YMARGIN, TALL_BUTTON_W, BUTTONSIZE)
+BROWNRECT = pygame.Rect(XMARGIN + BUTTONSIZE + BUTTONGAPSIZE + BUTTONSIZE + BUTTONGAPSIZE, YMARGIN + BUTTONSIZE - 2*BUTTONGAPSIZE, TALL_BUTTON_W, BUTTONSIZE)
 REPLAYRECT = pygame.Rect(6, 3, 65, 30)
 
 #@TODO: ADD
 
 
 
-
+def drawCages():
+    cages = pygame.image.load("AVi/cages.png").convert_alpha()
+    DISPLAYSURF.blit(cages, (0, 0))
 
 def loop():
 
-    clip = VideoFileClip('Avi/momo-code.mp4')
-    clip.preview()
+    #clip = VideoFileClip('AVi/momo-code.mp4')
+    #clip.preview()
 
     global FPSCLOCK, DISPLAYSURF, BASICFONT, BEEP1, BEEP2, BEEP3, BEEP4, highScore
 
@@ -77,10 +83,10 @@ def loop():
     infoRect.topleft = (10, WINDOWHEIGHT - 25)
 
     # load the sound files
-    BEEP1 = pygame.mixer.Sound('Avi/beep1.ogg')
-    BEEP2 = pygame.mixer.Sound('Avi/beep2.ogg')
-    BEEP3 = pygame.mixer.Sound('Avi/beep3.ogg')
-    BEEP4 = pygame.mixer.Sound('Avi/beep4.ogg')#@TODO: ADD
+    BEEP1 = pygame.mixer.Sound('AVi/beep1.ogg')
+    BEEP2 = pygame.mixer.Sound('AVi/beep2.ogg')
+    BEEP3 = pygame.mixer.Sound('AVi/beep3.ogg')
+    BEEP4 = pygame.mixer.Sound('AVi/beep4.ogg')#@TODO: ADD
 
     # Initialize some variables for a new game
     pattern = [] # stores the pattern of colors
@@ -124,8 +130,7 @@ def loop():
 
         DISPLAYSURF.blit(infoSurf, infoRect)
 
-
-
+        drawCages()
 
         checkForQuit()
         for event in pygame.event.get(): # event handling loop
@@ -223,18 +228,22 @@ def flashButtonAnimation(color, animationSpeed=50):#@TODO: ADD
         sound = BEEP1
         flashColor = BRIGHTYELLOW
         rectangle = YELLOWRECT
+        flashSurf = pygame.Surface((TALL_BUTTON_W, BUTTONSIZE))
     elif color == BLUE:
         sound = BEEP2
         flashColor = BRIGHTBLUE
         rectangle = BLUERECT
+        flashSurf = pygame.Surface((TALL_BUTTON_W, BUTTONSIZE))
     elif color == RED:
-        sound = BEEP3
+        sound = BEEP4
         flashColor = BRIGHTRED
         rectangle = REDRECT
+        flashSurf = pygame.Surface((SMALLBUTTONSIZE, SMALLBUTTONSIZE))
     elif color == GREEN:
-        sound = BEEP4
+        sound = BEEP1
         flashColor = BRIGHTGREEN
         rectangle = GREENRECT
+        flashSurf = pygame.Surface((TALL_BUTTON_W, SMALLBUTTONSIZE))
     elif color == PINK:
         sound = BEEP1
         flashColor = BRIGHTPINK
@@ -243,14 +252,17 @@ def flashButtonAnimation(color, animationSpeed=50):#@TODO: ADD
         sound = BEEP2
         flashColor = BRIGHTORANGE
         rectangle = ORANGERECT
+        flashSurf = pygame.Surface((SMALLBUTTONSIZE, SMALLBUTTONSIZE))
     elif color == PURPLE:
         sound = BEEP3
         flashColor = BRIGHTPURPLE
         rectangle = PURPLERECT
+        flashSurf = pygame.Surface((TALL_BUTTON_W, BUTTONSIZE))
     elif color == BROWN:
         sound = BEEP4
         flashColor = BRIGHTBROWN
         rectangle = BROWNRECT
+        flashSurf = pygame.Surface((TALL_BUTTON_W, BUTTONSIZE))
     elif color == BLACK:
         sound = BEEP4
         flashColor = GREY
@@ -320,7 +332,9 @@ def changeBackgroundAnimation(animationSpeed=40):
     newBgSurf = newBgSurf.convert_alpha()
     r, g, b = newBgColor
 
+
     for alpha in range(0, 255, animationSpeed): # animation loop
+        #drawCages()
         checkForQuit()
         DISPLAYSURF.fill(bgColor)
 
