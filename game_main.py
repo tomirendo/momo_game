@@ -10,6 +10,13 @@ try: #Import modules to play video game files
 except:
     pass
 from Neta.greenGrocerGame import GreenGrocerGame
+
+
+try: 
+    from momo_game.Neta.greenGrocerGame import GreenGrocerGame
+except : 
+    pass 
+
 from RPG.rpg import RPG_minigame as minigame
 from AVi.coloredBoxes import *
 # from momo_game.Naama.ChaseGame import ChaseGame
@@ -47,6 +54,13 @@ class Game():
             self.__minigame_list.append(coloredGame(self))
 
         self.__minigame_list.append(PacMan(self))
+        try :
+            self.__minigame_list.append(GreenGrocerGame(self))
+        except :
+            pass
+        # self.__minigame_list.append(ChaseGame(self))
+        self.__minigame_list.append(minigame(self))
+        self.__minigame_list.append(coloredGame(self))
         self.__current_minigame_loop = self.__minigame_list[0].get_loop()
         self.__current_minigame_number = 0
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
