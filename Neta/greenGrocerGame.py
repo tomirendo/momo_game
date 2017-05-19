@@ -231,7 +231,7 @@ class GreenGrocerGame():
             self.draw_powerups()
 
             current_time = int (time.time() - self._start_time)
-            current_time *= 4
+            current_time *= 8
             hours = current_time // 60 + self.__morning
             minutes = current_time % 60
             if (hours < self.__night):
@@ -296,7 +296,7 @@ class GreenGrocerGame():
 
 
     def display_day_sum(self):
-        if self.__number_of_days <= 4:
+        if self.__number_of_days <= 1:
             x_position = 150
             y_position = 100
             income = self.__money
