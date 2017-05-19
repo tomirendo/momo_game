@@ -5,10 +5,11 @@ import random
 from naama.Runner import Runner
 from naama.Obstacle import Obstacle
 from naama.Flower import Flower
+from moviepy.editor import VideoFileClip
+STATICCOUNTER=0
 
 
 class ChaseGame:
-
     MAX_SCORE = 25
     BACKGROUND_SPEED = 10
     END_GAME_MESSAGE_1 = "Oh my, seems like the Men in Grey got you."
@@ -26,6 +27,7 @@ class ChaseGame:
     END_DELAY = 100
 
     def __init__(self, game):
+
         self.game = game
         self.screen = game.get_screen()
         self.screen_width = game.SCREEN_WIDTH
@@ -44,6 +46,8 @@ class ChaseGame:
         self.obstacles = []
         self.flower = []
 
+        #clip = VideoFileClip('naama/momo-skate.mp4')
+        #clip.preview()
     def manage_events(self):
         keys_pressed = self.game.get_keys_pressed()
         if keys_pressed[pygame.QUIT]:
@@ -154,6 +158,12 @@ class ChaseGame:
             self.__reset_countdown -= 1
 
     def run_round(self):
+        global STATICCOUNTER
+        if STATICCOUNTER == 0:
+            clip = VideoFileClip('naama/momo-skate.mp4')
+            clip.preview()
+            STATICCOUNTER += 1
+
         if self.runner.get_scores() <= self.MAX_SCORE:
             if not self.__reset_countdown != 0:
                 self.manage_background()

@@ -231,7 +231,7 @@ class GreenGrocerGame():
             self.draw_powerups()
 
             current_time = int (time.time() - self._start_time)
-            current_time *= 8
+            current_time *= 16
             hours = current_time // 60 + self.__morning
             minutes = current_time % 60
             if (hours < self.__night):

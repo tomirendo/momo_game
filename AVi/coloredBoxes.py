@@ -67,8 +67,8 @@ def drawCages():
 
 def loop():
 
-    #clip = VideoFileClip('AVi/momo-code.mp4')
-    #clip.preview()
+    clip = VideoFileClip('AVi/momo-code.mp4')
+    clip.preview()
 
     global FPSCLOCK, DISPLAYSURF, BASICFONT, BEEP1, BEEP2, BEEP3, BEEP4, highScore
 
