@@ -9,7 +9,12 @@ try: #Import modules to play video game files
     from moviepy.editor import VideoFileClip
 except:
     pass
-from momo_game.Neta.greenGrocerGame import GreenGrocerGame
+
+try: 
+    from momo_game.Neta.greenGrocerGame import GreenGrocerGame
+except : 
+    pass 
+
 from RPG.rpg import RPG_minigame as minigame
 from AVi.coloredBoxes import *
 # from momo_game.Naama.ChaseGame import ChaseGame
@@ -37,7 +42,10 @@ class Game():
         '''create a new game object'''
         self.__screen = screen
         self.__minigame_list = list()
-        self.__minigame_list.append(GreenGrocerGame(self))
+        try :
+            self.__minigame_list.append(GreenGrocerGame(self))
+        except :
+            pass
         # self.__minigame_list.append(ChaseGame(self))
         self.__minigame_list.append(minigame(self))
         self.__minigame_list.append(coloredGame(self))
