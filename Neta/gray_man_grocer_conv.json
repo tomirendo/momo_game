@@ -1,0 +1,44 @@
+{"text" : "Mr Curtis, it has come to our attention that you want to join the Time Bank",
+"answers" : [
+{"answer_text": "No, I've never even heard of this bank",
+"next_dialog" : {
+	"text" : "Mr Curtis, you waste your days selling vegetables. You will die one day and be forgotten",
+	"answers":[
+		{"answer_text" : "I - what do you want?",
+		"next_dialog": {
+		"text" : "Mr. Curtis, your time is valuable. You must use it wisely. You must save it.",
+		"answers":[
+		{"answer_text" : "What do you mean?",
+		"next_dialog" : {
+			"text" : "You put time in our bank. We will give you interest on it - you will double your savings annually.",
+			"answers":[
+			{"answer_text" : "And then I'll have more time? But how do I do that?",
+			"next_dialog" :
+				{"text" : "Work hard, do nothing that isn't absolutely necessary. Don't spend so much time with each costumer.",
+				"answers":[
+					{
+						"answer_text": "Wait, but how will the time I save get to my bank account?",
+						"next_dialog": {
+							"text": "Don't worry. We will take care of that.",
+							"answers": [
+								{
+									"answer_text": "I guess I don't won't to waste my life. Ummm... okay, I agree",
+									"next_dialog": null
+								}
+							]
+						}
+					}]}
+			}]
+		}
+		}
+		]
+		}
+		}
+	]
+
+}
+}
+
+]
+
+}

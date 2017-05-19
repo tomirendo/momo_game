@@ -4,6 +4,7 @@ import time
 from momo_game.Neta.Shopper import Shopper
 from momo_game.RPG.dialog import Dialog, DIALOG_BOX_SIZE
 from momo_game.Neta.power_ups import PowerUps
+import json
 
 POSITION = 'positiom'
 IMAGE = 'image'
@@ -17,11 +18,11 @@ TEXT = 'text'
 
 #vegetable constants:
 CARROTS = 'carrots'
-CARROT_POSITION = (11+150,139+150)
+CARROT_POSITION = (11+150,124+150)
 TOMATOES = 'tomatoes'
-TOMATO_POSITION = (139+150,296+150)
+TOMATO_POSITION = (134+150,262+150)
 CUCUMBERS = 'cucumbers'
-CUCUMBER_POSITION = (296+150,437+150)
+CUCUMBER_POSITION = (265+150,515)
 
 speech_bubble_path = os.path.abspath('Neta/speechBubble.png')
 SPEECH_BUBBLE_IMAGE = pygame.image.load(speech_bubble_path)
@@ -31,7 +32,7 @@ class GreenGrocerGame():
     '''The green Grocer minigame for the Momo game'''
 
     STEPSIZE = 3
-    GROCER_IMAGE_WIDTH = 130
+    GROCER_IMAGE_WIDTH = 90
     GROCER_IMAGE_HEIGHT = 300
     TOMATO_PRICE = 0.9
     CARROT_PRICE = 1.1
@@ -41,7 +42,10 @@ class GreenGrocerGame():
     def __init__(self,game):
         '''Initiate the game object'''
         self.__game = game
-        self.ad = False
+        self.__ad = False
+        self.__gray_man = False
+        self.__salee = False
+        self.__organic = False
         image_path = os.path.abspath('Neta/veg.png')
         self.__bg_image = pygame.image.load(image_path)
         self.__screen = self.__game.get_screen()
@@ -69,9 +73,9 @@ class GreenGrocerGame():
         self.__last_down_press = time.time()
         self.__number_of_days = 5
         self.__finished = False
-        self.gray_man = False
-        self.sale = False
-        self.organic = False
+        self.__morning = 9
+        self.__night = 17
+        self.__gray_man_dialogue = False
 
 
 
@@ -90,17 +94,17 @@ class GreenGrocerGame():
         self.__stalls = {}
         self.__stalls[TOMATOES] = {}
         self.__stalls[TOMATOES][POSITION] = TOMATO_POSITION
-        path = os.path.abspath('Neta/tomato.png')
+        path = os.path.abspath('gal/tom.png')
         self.__stalls[TOMATOES][IMAGE] = pygame.image.load(path)
 
         self.__stalls[CARROTS] = {}
         self.__stalls[CARROTS][POSITION] = CARROT_POSITION
-        path = os.path.abspath('Neta/carrot.png')
+        path = os.path.abspath('gal/carrot.png')
         self.__stalls[CARROTS][IMAGE] = pygame.image.load(path)
 
         self.__stalls[CUCUMBERS] = {}
         self.__stalls[CUCUMBERS][POSITION] = CUCUMBER_POSITION
-        path = os.path.abspath('Neta/cucumber.png')
+        path = os.path.abspath('gal/cuc.png')
         self.__stalls[CUCUMBERS][IMAGE] = pygame.image.load(path)
 
 
@@ -116,16 +120,17 @@ class GreenGrocerGame():
             self.__display_day_summary = False
             self.__money = self.display_day_sum()
             self._start_time = time.time()
-            self.create_shoppers()
             self.__basket = list()
             self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
             self.__vegetables_sold = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
+            self.create_shoppers()
 
         if pressed_keys[pygame.K_RETURN] and self.__doing_dialogue and (time.time() - self.__last_enter > 1):
             self.__dialog.press_enter()
             self.__last_enter = time.time()
             if (self.__dialog.get_done()):
                 self.__can_move = True
+                self.__gray_man_dialogue = False
                 self.__basket_text = "Tomatoes: " + str(self.__shopping_list[TOMATOES]) + "     Cucumbers: " + str(
                     self.__shopping_list[CUCUMBERS]) + "     Carrots: " + str(self.__shopping_list[CARROTS])
 
@@ -140,7 +145,7 @@ class GreenGrocerGame():
             if pressed_keys[pygame.K_DOWN]:
                 if (time.time() - self.__last_down_press > 1):
                     self.__last_down_press = time.time()
-                    if self.__grocer[POSITION][0] >= 0:
+                    if self.__grocer[POSITION][0] >= self.__game.SCREEN_WIDTH - 300:
                         if (self.__during_mission):
                             self.check_basket()
                         else:
@@ -148,7 +153,7 @@ class GreenGrocerGame():
                             self.__during_mission = True
 
                 for vegetable in self.__stalls:
-                    if (self.__grocer[POSITION][0] > self.__stalls[vegetable][POSITION][0] and self.__grocer[POSITION][0] < self.__stalls[vegetable][POSITION][1]):
+                    if (self.__grocer[POSITION][0]  > self.__stalls[vegetable][POSITION][0] - 10 and self.__grocer[POSITION][0] + self.__grocer[WIDTH] < self.__stalls[vegetable][POSITION][1]):
                         if time.time() - self.__last_vegetable_added > 0.5 and len(self.__basket) <= 13:
                             self.__basket.append(vegetable)
                             self.__last_vegetable_added = time.time()
@@ -218,23 +223,23 @@ class GreenGrocerGame():
 
     def display_sidebar(self):
         '''display the amount of money earned'''
-        money_text = self.__font.render("Money: " + str("%.2f" % self.__money), True, (255,255,255))
+        money_text = self.__font.render("Money: " + str("%.2f" % self.__money), True, (0,0,0))
         self.__screen.blit(money_text,(10, 80))
 
         if (not self.__display_day_summary):
             self.draw_powerups()
 
             current_time = int (time.time() - self._start_time)
-            current_time *= 8
-            hours = current_time // 60 + 9
+            current_time *= 4
+            hours = current_time // 60 + self.__morning
             minutes = current_time % 60
-            if (hours < 17):
-                time_text = self.__font.render("Clock: " + str(hours) + ":" + str(minutes), True, (255,255,255))
+            if (hours < self.__night):
+                time_text = self.__font.render("Clock: " + str(hours) + ":" + str(minutes), True, (0,0,0))
                 self.__screen.blit(time_text,(10, 110))
             else:
                 self.__display_day_summary = True
         else:
-            time_text = self.__font.render("Day Summary", True, (255, 255, 255))
+            time_text = self.__font.render("Day Summary", True, (0, 0, 0))
             self.__screen.blit(time_text, (10, 110))
 
 
@@ -264,7 +269,7 @@ class GreenGrocerGame():
 
     def main_loop(self):
         '''the main loop for the minigame'''
-        self.__screen.fill((0, 0, 0))
+        self.__screen.fill((250, 250, 250))
         if not (self.__display_day_summary):
             self.__screen.blit(self.__bg_image,(150,120))
             self.__screen.blit(self.__grocer[IMAGE],self.__grocer[POSITION])
@@ -282,6 +287,9 @@ class GreenGrocerGame():
         self.check_mouse_clicks()
         self.display_message()
 
+        if (self.__gray_man_dialogue):
+            self.__screen.blit(pygame.image.load('Neta/gray_man.png'), (self.__grocer[POSITION][0] + self.__grocer[WIDTH] + 50, self.__grocer[POSITION][1]))
+
         return not self.__finished
 
 
@@ -294,13 +302,12 @@ class GreenGrocerGame():
             tomato_price = self.__vegetables_sold[TOMATOES] * (GreenGrocerGame.TOMATO_PRICE - 0.2)
             cucumber_price = self.__vegetables_sold[CUCUMBERS] * (GreenGrocerGame.CUCUMBER_PRICE - 0.2)
             carrot_price = self.__vegetables_sold[CARROTS] * (GreenGrocerGame.CARROT_PRICE - 0.2)
-            text = ["Vegetables sold today:", str(self.__vegetables_sold[TOMATOES]) + " tomatoes" , str(self.__vegetables_sold[CARROTS]) + " carrots", str(self.__vegetables_sold[CUCUMBERS]) + " cucumbers" , "Expenses:" , "Tomatoes: " + str(tomato_price) , "Carrots: " + str(carrot_price) ,
-                   "Cucumbers: " + str(cucumber_price) ," " , "Net Income today: " + str( "%.2f" % (income - tomato_price - cucumber_price - carrot_price)), " ", " ", " ", "Click on powerups to get them", " ", " ", "Press up key to begin the next day"]
+            text = ["Vegetables sold today:", str(self.__vegetables_sold[TOMATOES]) + " tomatoes" , str(self.__vegetables_sold[CARROTS]) + " carrots", str(self.__vegetables_sold[CUCUMBERS]) + " cucumbers" , "Expenses:" , "Tomatoes: " + str("%.2f" % tomato_price) , "Carrots: " + str("%.2f" % carrot_price) ,
+                   "Cucumbers: " + str("%.2f" % cucumber_price) ," " , "Net Income today: " + str( "%.2f" % (income - tomato_price - cucumber_price - carrot_price)), " ", " ", " ", "Click on powerups to get them", " ", " ", "Press up key to begin the next day"]
             for line in text:
-                text_to_print = self.__font.render(line,True,(255,255,255))
+                text_to_print = self.__font.render(line,True,(0,0,0))
                 self.__screen.blit(text_to_print, (x_position, y_position))
                 y_position += 25
-            self.create_shoppers()
             return income - tomato_price - cucumber_price - carrot_price
         else:
             self.__finished = True
@@ -327,17 +334,22 @@ class GreenGrocerGame():
     def create_shoppers(self):
         '''create the shoppers'''
         self.__shoppers = list()
-        for i in range(6):
-            self.__shoppers.append(Shopper(False))
-
-        if self.ad is True:
-            for i in range(10):
+        if (self.__gray_man):
+            for i in range(25):
                 self.__shoppers.append(Shopper(True))
 
-        if self.sale:
-            for shopper in self.__shoppers:
-                remainder = 12 - (shopper.get_shopping_list()[TOMATOES] + shopper.get_shopping_list()[CUCUMBERS] + shopper.get_shopping_list()[CARROTS])
-                shopper.get_shopping_list()[CUCUMBERS] += remainder
+        else:
+            for i in range(6):
+                self.__shoppers.append(Shopper(False))
+
+            if self.__ad is True:
+                for i in range(10):
+                    self.__shoppers.append(Shopper(True))
+
+            if self.__salee:
+                for shopper in self.__shoppers:
+                    remainder = 12 - (shopper.get_shopping_list()[TOMATOES] + shopper.get_shopping_list()[CUCUMBERS] + shopper.get_shopping_list()[CARROTS])
+                    shopper.get_shopping_list()[CUCUMBERS] += remainder
 
 
 
@@ -366,21 +378,38 @@ class GreenGrocerGame():
     #########################
 
     def local_ad(self):
-        self.ad = True
+        self.__ad = True
         self.__message = "The ad is attracting new costumers to you store"
 
     def sale(self):
-        self.sale = True
+        self.__salee = True
         self.__message = "As a result of your sale, people are buying more vegetables"
         GreenGrocerGame.CARROT_PRICE -= 0.1
         GreenGrocerGame.CUCUMBER_PRICE -= 0.1
         GreenGrocerGame.TOMATO_PRICE -= 0.1
 
     def gray_man(self):
-        self.gray_man = True
+        self.__gray_man = True
+        path = os.path.abspath('gal/angry_yarkan.png')
+        self.__grocer[IMAGE] = pygame.image.load(path)
+        bg_path = os.path.abspath('Neta/bg_gray.png')
+        self.__bg_image = pygame.image.load(bg_path)
+        self.__morning = 8
+        self.night = 20
+        self.create_shoppers()
+        self.__can_move = False
+        self.__doing_dialogue = True
+        json_file_path = os.path.abspath("Neta/gray_man_grocer_conv.json")
+        json_file = open(json_file_path)
+        json_str = json_file.read()
+        self.__dialog = Dialog(json.loads(json_str))
+        self.__gray_man_dialogue = True
+
+
+
 
     def organic(self):
-        self.organic = True
+        self.__organic = True
         GreenGrocerGame.CARROT_PRICE += 0.5
         GreenGrocerGame.CUCUMBER_PRICE += 0.5
         GreenGrocerGame.TOMATO_PRICE += 0.5

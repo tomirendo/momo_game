@@ -28,7 +28,7 @@ class Shopper():
             self.__dialogue = shopper_dictionary["shopper"+str(Shopper.SHOPPER_NUMBER)][DIALOGUE]
             Shopper.SHOPPER_NUMBER += 1
         else:
-            self.__dialogue = shopper_dictionary["Dummy"]
+            self.__dialogue = shopper_dictionary["Dummy"].copy()
             self.__shopping_list = {"tomatoes" : random.randint(1,4), "carrots" : random.randint(1,4), "cucumbers" : random.randint(1,4)}
 
 

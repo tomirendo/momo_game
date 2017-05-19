@@ -12,7 +12,7 @@ class ChaseGame:
 
     MAX_SCORE = 30
 
-    def __innit__(self, game):
+    def __init__(self, game):
         clip = VideoFileClip('Naama/momo-skate.mp4')
         clip.preview()
         self.game = game
