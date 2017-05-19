@@ -2,10 +2,9 @@
 import os
 import pygame
 import random
-from Runner import Runner
-from Chaser import Chaser
-from Obstacle import Obstacle
-from Flower import Flower
+from naama.Runner import Runner
+from naama.Obstacle import Obstacle
+from naama.Flower import Flower
 
 
 class ChaseGame:
@@ -17,13 +16,13 @@ class ChaseGame:
     OBSTACLE_FREQUENCY = 200
     RESET_DURATION = 200
 
-    TRASH_CAN = pygame.image.load(os.path.abspath('trash_can.png'))
-    TRASH_BAG = pygame.image.load(os.path.abspath('trash_bag.png'))
-    OLD_MAN_1 = pygame.image.load(os.path.abspath('old_man.png'))
-    OLD_MAN_2 = pygame.image.load(os.path.abspath('man.png'))
-    OLD_WOMAN = pygame.image.load(os.path.abspath('old_woman.png'))
-    GREY_GENTEMAN = pygame.image.load(os.path.abspath('dark_person.png'))
-    FLOWER = pygame.image.load(os.path.abspath('flower.png'))
+    TRASH_CAN = pygame.image.load(os.path.abspath('naama\\trash_can.png'))
+    TRASH_BAG = pygame.image.load(os.path.abspath('naama\\trash_bag.png'))
+    OLD_MAN_1 = pygame.image.load(os.path.abspath('naama\\old_man.png'))
+    OLD_MAN_2 = pygame.image.load(os.path.abspath('naama\\man.png'))
+    OLD_WOMAN = pygame.image.load(os.path.abspath('naama\\old_woman.png'))
+    GREY_GENTEMAN = pygame.image.load(os.path.abspath('naama\\dark_person.png'))
+    FLOWER = pygame.image.load(os.path.abspath('naama\\flower.png'))
     END_DELAY = 100
 
     def __init__(self, game):
@@ -31,18 +30,17 @@ class ChaseGame:
         self.screen = game.get_screen()
         self.screen_width = game.SCREEN_WIDTH
         self.screen_height = game.SCREEN_HEIGHT
-        self.background_1 = pygame.image.load('city_final.jpg')
-        self.background_2 = pygame.image.load('city_final.jpg')
+        self.background_1 = pygame.image.load('naama\\city_final.jpg')
+        self.background_2 = pygame.image.load('naama\\city_final.jpg')
         self.background_1_x_pos = 0
         self.background_2_x_pos = self.screen_width
-        self.music = pygame.mixer.music.load(os.path.abspath('The Sound of Silence.mp3'))
+        self.music = pygame.mixer.music.load(os.path.abspath('naama\\The Sound of Silence.mp3'))
         self.continue_game = True
         self.font = pygame.font.SysFont('monospace', 16, (0, 0, 0))
         self.__reset_countdown = 0
         self.__end_delay = 0
 
         self.runner = Runner()
-        self.chaser = Chaser()
         self.obstacles = []
         self.flower = []
 

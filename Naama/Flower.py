@@ -1,7 +1,9 @@
 
 import random
+import pygame
 
-class Flower:
+
+class Flower(pygame.sprite.Sprite):
 
     LAND_HEIGHT = 410
     MAX_HEIGHT = 200

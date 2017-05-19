@@ -9,7 +9,7 @@ class Runner(pygame.sprite.Sprite):
     JUMP_DURATION = 6
     JUMP_COOL_DOWN_ROUNDS = 50
     FIXED_X_POSITION = 300
-    MOMO_IMAGE = pygame.image.load(os.path.abspath('momo_skate.png'))
+    MOMO_IMAGE = pygame.image.load(os.path.abspath('naama\\momo_skate.png'))
 
     def __init__(self):
         super().__init__()
