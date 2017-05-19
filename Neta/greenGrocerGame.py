@@ -71,7 +71,7 @@ class GreenGrocerGame():
         self.__message_time = time.time()
         self.__during_mission = False
         self.__last_down_press = time.time()
-        self.__number_of_days = 5
+        self.__number_of_days = 1
         self.__finished = False
         self.__morning = 9
         self.__night = 17
@@ -124,6 +124,7 @@ class GreenGrocerGame():
             self.__shopping_list = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
             self.__vegetables_sold = {TOMATOES: 0, CUCUMBERS: 0, CARROTS: 0}
             self.create_shoppers()
+            self.__number_of_days += 1
 
         if pressed_keys[pygame.K_RETURN] and self.__doing_dialogue and (time.time() - self.__last_enter > 1):
             self.__dialog.press_enter()
@@ -230,7 +231,7 @@ class GreenGrocerGame():
             self.draw_powerups()
 
             current_time = int (time.time() - self._start_time)
-            current_time *= 4
+            current_time *= 20
             hours = current_time // 60 + self.__morning
             minutes = current_time % 60
             if (hours < self.__night):
@@ -295,7 +296,7 @@ class GreenGrocerGame():
 
 
     def display_day_sum(self):
-        if self.__number_of_days <= 5:
+        if self.__number_of_days <= 4:
             x_position = 150
             y_position = 100
             income = self.__money
