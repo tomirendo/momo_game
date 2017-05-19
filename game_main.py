@@ -13,7 +13,9 @@ from Neta.greenGrocerGame import GreenGrocerGame
 from RPG.rpg import RPG_minigame as minigame
 from AVi.coloredBoxes import *
 # from momo_game.Naama.ChaseGame import ChaseGame
-
+from crazyPacManBlitz.PacMan import  PacMan
+if argv[-1] == "pac_man":
+    pacman = True
 if argv[-1] == "yotam":
     from RPG.rpg import RPG_minigame as minigame
 elif argv[-1] == "neta":
@@ -23,8 +25,9 @@ elif argv[-1] == "avi":
     from AVi.coloredBoxes import *
     minigame = coloredGame
 else:
-    from momo_game.Naama.ChaseGame import ChaseGame
-    minigame = ChaseGame
+    # from momo_game.Naama.ChaseGame import ChaseGame
+    # minigame =
+    pass
 
 class Game():
 
@@ -37,10 +40,13 @@ class Game():
         '''create a new game object'''
         self.__screen = screen
         self.__minigame_list = list()
-        self.__minigame_list.append(GreenGrocerGame(self))
-        # self.__minigame_list.append(ChaseGame(self))
-        self.__minigame_list.append(minigame(self))
-        self.__minigame_list.append(coloredGame(self))
+        if not pacman:
+            self.__minigame_list.append(GreenGrocerGame(self))
+            # self.__minigame_list.append(ChaseGame(self))
+            self.__minigame_list.append(minigame(self))
+            self.__minigame_list.append(coloredGame(self))
+
+        self.__minigame_list.append(PacMan(self))
         self.__current_minigame_loop = self.__minigame_list[0].get_loop()
         self.__current_minigame_number = 0
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
@@ -88,11 +94,11 @@ if __name__ == "__main__":
     done = False
     screen = pygame.display.set_mode((Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT))
     game = Game(screen)
-    try:  # Attempt to play intro video
-        clip = VideoFileClip('momo-intro.mp4')
-        clip.preview()
-    except:
-        pass
+    # try:  # Attempt to play intro video
+    #     clip = VideoFileClip('momo-intro.mp4')
+    #     clip.preview()
+    # except:
+    #     pass
 
     while not done:
 
