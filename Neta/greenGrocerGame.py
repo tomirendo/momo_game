@@ -231,7 +231,7 @@ class GreenGrocerGame():
             self.draw_powerups()
 
             current_time = int (time.time() - self._start_time)
-            current_time *= 20
+            current_time *= 4
             hours = current_time // 60 + self.__morning
             minutes = current_time % 60
             if (hours < self.__night):
@@ -405,6 +405,13 @@ class GreenGrocerGame():
         json_str = json_file.read()
         self.__dialog = Dialog(json.loads(json_str))
         self.__gray_man_dialogue = True
+        img1_path = os.path.abspath("gal/gray_tom.png")
+        self.__stalls[TOMATOES][IMAGE] = pygame.image.load(img1_path)
+        img1_path = os.path.abspath("Neta/gray_carrot.png")
+        self.__stalls[CARROTS][IMAGE] = pygame.image.load(img1_path)
+        img1_path = os.path.abspath("gal/gray_cuc.png")
+        self.__stalls[CUCUMBERS][IMAGE] = pygame.image.load(img1_path)
+
 
 
 

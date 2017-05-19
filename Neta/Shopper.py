@@ -8,6 +8,32 @@ json_file = open(json_file_path)
 json_str = json_file.read()
 shopper_dictionary = json.loads(json_str)
 
+img1 = "Neta/shopper1.png"
+img1_path = os.path.abspath(img1)
+img2 = "Neta/shopper2.png"
+img2_path = os.path.abspath(img2)
+img3 = "Neta/shopper3.png"
+img3_path = os.path.abspath(img3)
+img4 = "Neta/shopper4.jpg"
+img4_path = os.path.abspath(img4)
+img6 = "Neta/shopper6.png"
+img6_path = os.path.abspath(img6)
+img7 = "Neta/shopper7.png"
+img7_path = os.path.abspath(img7)
+img8 = "Neta/shopper8.jpeg"
+img8_path = os.path.abspath(img8)
+img9 = "Neta/shopper9.png"
+img9_path = os.path.abspath(img9)
+
+img_list = list()
+img_list.append(pygame.image.load(img1_path))
+img_list.append(pygame.image.load(img2_path))
+img_list.append(pygame.image.load(img3_path))
+img_list.append(pygame.image.load(img4_path))
+img_list.append(pygame.image.load(img6_path))
+img_list.append(pygame.image.load(img7_path))
+img_list.append(pygame.image.load(img8_path))
+img_list.append(pygame.image.load(img9_path))
 
 DIALOGUE = 'Dialog'
 ORDER = 'order'
@@ -21,8 +47,9 @@ class Shopper():
 
     def __init__(self, dummy):
         '''create a new shopper'''
-        path = os.path.abspath('Neta/Human.jpg')
-        self.__image = pygame.image.load(path)
+        img_num = random.randint(0,len(img_list) - 1)
+        self.__image = img_list[img_num]
+
         if (not dummy):
             self.__shopping_list = shopper_dictionary["shopper" + str(Shopper.SHOPPER_NUMBER)][ORDER]
             self.__dialogue = shopper_dictionary["shopper"+str(Shopper.SHOPPER_NUMBER)][DIALOGUE]

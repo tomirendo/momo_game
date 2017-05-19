@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.6
+#!/usr/local/bin/python3.5
 import pygame
 from sys import argv
 
@@ -9,7 +9,16 @@ try: #Import modules to play video game files
     from moviepy.editor import VideoFileClip
 except:
     pass
+<<<<<<< HEAD
 from Neta.greenGrocerGame import GreenGrocerGame
+=======
+
+try: 
+    from momo_game.Neta.greenGrocerGame import GreenGrocerGame
+except : 
+    pass 
+
+>>>>>>> 4d4ecf3fad5ef114d17131c5ed247718e5c44321
 from RPG.rpg import RPG_minigame as minigame
 from AVi.coloredBoxes import *
 # from momo_game.Naama.ChaseGame import ChaseGame
@@ -37,7 +46,10 @@ class Game():
         '''create a new game object'''
         self.__screen = screen
         self.__minigame_list = list()
-        self.__minigame_list.append(GreenGrocerGame(self))
+        try :
+            self.__minigame_list.append(GreenGrocerGame(self))
+        except :
+            pass
         # self.__minigame_list.append(ChaseGame(self))
         self.__minigame_list.append(minigame(self))
         self.__minigame_list.append(coloredGame(self))
