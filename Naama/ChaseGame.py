@@ -9,7 +9,7 @@ from naama.Flower import Flower
 
 class ChaseGame:
 
-    MAX_SCORE = 50
+    MAX_SCORE = 25
     BACKGROUND_SPEED = 10
     END_GAME_MESSAGE_1 = "Oh my, seems like the Men in Grey got you."
     END_GAME_MESSAGE_2 = "You must try again Momo, you must save our town!"
