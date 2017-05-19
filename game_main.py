@@ -9,19 +9,15 @@ try: #Import modules to play video game files
     from moviepy.editor import VideoFileClip
 except:
     pass
-<<<<<<< HEAD
-from Neta.greenGrocerGame import GreenGrocerGame
-=======
 
-try: 
-    from momo_game.Neta.greenGrocerGame import GreenGrocerGame
-except : 
-    pass 
+try:
+    from Neta.greenGrocerGame import GreenGrocerGame
+except :
+    pass
 
->>>>>>> 4d4ecf3fad5ef114d17131c5ed247718e5c44321
 from RPG.rpg import RPG_minigame as minigame
 from AVi.coloredBoxes import *
-# from momo_game.Naama.ChaseGame import ChaseGame
+from naama.ChaseGame import ChaseGame
 
 if argv[-1] == "yotam":
     from RPG.rpg import RPG_minigame as minigame
@@ -32,7 +28,7 @@ elif argv[-1] == "avi":
     from AVi.coloredBoxes import *
     minigame = coloredGame
 else:
-    from momo_game.Naama.ChaseGame import ChaseGame
+    from naama.ChaseGame import *
     minigame = ChaseGame
 
 class Game():
@@ -50,8 +46,8 @@ class Game():
             self.__minigame_list.append(GreenGrocerGame(self))
         except :
             pass
-        # self.__minigame_list.append(ChaseGame(self))
         self.__minigame_list.append(minigame(self))
+        self.__minigame_list.append(ChaseGame(self))
         self.__minigame_list.append(coloredGame(self))
         self.__current_minigame_loop = self.__minigame_list[0].get_loop()
         self.__current_minigame_number = 0
@@ -73,7 +69,7 @@ class Game():
         '''Advance to the next minigame'''
         self.__current_minigame_number += 1
         self.__current_minigame_loop = self.__minigame_list[self.__current_minigame_number].get_loop()
-        # print(self.__minigame_list[self.__current_minigame_number])
+        print(self.__minigame_list[self.__current_minigame_number])
         self.__music = self.__minigame_list[self.__current_minigame_number].get_music()
 
 
