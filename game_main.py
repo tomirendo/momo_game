@@ -9,7 +9,7 @@ try: #Import modules to play video game files
     from moviepy.editor import VideoFileClip
 except:
     pass
-from momo_game.Neta.greenGrocerGame import GreenGrocerGame
+from Neta.greenGrocerGame import GreenGrocerGame
 from RPG.rpg import RPG_minigame as minigame
 from AVi.coloredBoxes import *
 # from momo_game.Naama.ChaseGame import ChaseGame

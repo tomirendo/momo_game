@@ -1,9 +1,9 @@
 import pygame
 import os
 import time
-from momo_game.Neta.Shopper import Shopper
-from momo_game.RPG.dialog import Dialog, DIALOG_BOX_SIZE
-from momo_game.Neta.power_ups import PowerUps
+from Neta.Shopper import Shopper
+from RPG.dialog import Dialog, DIALOG_BOX_SIZE
+from Neta.power_ups import PowerUps
 import json
 
 POSITION = 'positiom'
